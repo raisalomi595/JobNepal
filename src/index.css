@@ -1,1 +1,32 @@
+/*
+  ============================================================
+  index.css — Global styles (EXACT JobsNepal theme)
+  ============================================================
+  Colors extracted from the original site's CSS:
+    blue (#0261a6)   — Header, banner, links, section titles
+    orange (#fc8b07) — Buttons (Search, Sign Up), highlights
+    footer (#272727) — Dark gray footer
+    copyright (#2b2b2b) — Copyright bar
+    Font: Roboto (matches the original site)
+  ============================================================
+*/
+
 @import "tailwindcss";
+
+@theme {
+  --color-jn-blue: #0261a6;
+  --color-jn-blue-dark: #015c9e;
+  --color-jn-orange: #fc8b07;
+  --color-jn-orange-dark: #e07d09;
+  --color-jn-footer: #272727;
+  --color-jn-copyright: #2b2b2b;
+  --color-jn-border: #efefef;
+}
+
+@layer base {
+  body {
+    font-family: 'Roboto', 'Segoe UI', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
