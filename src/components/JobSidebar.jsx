@@ -48,7 +48,7 @@ export default function JobSidebar() {
         </div>
       </div>
 
-      {/* ===== Section 2: Hot Jobs (original: .hot-content) ===== */}
+   
       <div>
         <h2 className="text-\[#0261a6] text-sm font-bold uppercase mb-2">
           Hot Jobs
@@ -57,7 +57,7 @@ export default function JobSidebar() {
           <div className="max-h-\[500px] overflow-y-auto space-y-1">
             {hotJobs.map((item, i) => (
               <div key={i} className="flex gap-3 py-3 border-b border-\[#f6f6f6] last:border-b-0">
-                {/* Company logo — original: 50px, border, padding 3px */}
+               
                 <img
                   src={`https://ui-avatars.com/api/?name=${encodeURIComponent(item.company)}\&background=0261a6\&color=fff\&size=50\&bold=true`}
                   alt={item.company}

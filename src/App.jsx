@@ -25,12 +25,14 @@ import WhyChooseUs from "./components/WhyChooseUs";
 import TopCompanies from "./components/TopCompanies";
 import CallToAction from "./components/CallToAction";
 import Footer from "./components/Footer";
+import FeaturedJobs from "./components/FeaturedJobs";
 
 function App() {
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
       <HeroSection />
+      <FeaturedJobs />
 
       {/*
         Two-column main area (matching the original site layout):
