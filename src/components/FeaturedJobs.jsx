@@ -17,18 +17,18 @@ export default function FeaturedJobs() {
     <section className="py-12 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
-          <h2 className="text-2xl font-bold text-\\\[#0261a6]">Featured Jobs</h2>
+          <h2 className="text-2xl font-bold text-[#0261a6]">Featured Jobs</h2>
           <p className="mt-2 text-gray-500">Explore the latest opportunities from Nepal's top companies</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {jobs.map((job, i) => (
-            <div key={i} className="bg-white border border-\\\[#efefef] rounded-lg p-5 hover:shadow-md hover:border-gray-300 transition-all duration-300 group cursor-pointer">
+            <div key={i} className="bg-white border border-[#efefef] rounded-lg p-5 hover:shadow-md hover:border-gray-300 transition-all duration-300 group cursor-pointer">
               <div className="flex items-start justify-between mb-3">
                 <div className={`w-11 h-11 ${job.color} rounded flex items-center justify-center text-white font-bold text-sm`}>{job.logo}</div>
-                <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${typeColors\\\[job.type]}`}>{job.type}</span>
+                <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${typeColors[job.type]}`}>{job.type}</span>
               </div>
-              <h3 className="text-sm font-semibold text-gray-900 group-hover:text-\\\[#0261a6] transition-colors mb-0.5">{job.title}</h3>
+              <h3 className="text-sm font-semibold text-gray-900 group-hover:text-[#0261a6] transition-colors mb-0.5">{job.title}</h3>
               <p className="text-xs text-gray-500 mb-2">{job.company}</p>
               <div className="flex items-center justify-between text-xs text-gray-400">
                 <span className="flex items-center gap-1">
@@ -42,16 +42,16 @@ export default function FeaturedJobs() {
               </div>
               <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between">
                 <span className="text-xs text-gray-400">{job.posted}</span>
-                <button className="text-xs font-medium text-\\\[#0261a6] hover:underline">Apply Now &rarr;</button>
+                <button className="text-xs font-medium text-[#0261a6] hover:underline">Apply Now →</button>
               </div>
             </div>
           ))}
         </div>
 
         <div className="text-center mt-8">
-          <a href="#" className="inline-block text-sm font-semibold text-\\\[#0261a6] border border-\\\[#0261a6] hover:bg-\\\[#0261a6] hover:text-white px-6 py-2 rounded transition-colors">View All Jobs</a>
+          <a href="#" className="inline-block text-sm font-semibold text-[#0261a6] border border-[#0261a6] hover:bg-[#0261a6] hover:text-white px-6 py-2 rounded transition-colors">View All Jobs</a>
         </div>
       </div>
     </section>
   );
-}   
+}
