@@ -20,6 +20,8 @@ import HeroSection from "./components/HeroSection";
 import JobSidebar from "./components/JobSidebar";
 
 import FeaturedJobs from "./components/FeaturedJobs";
+import PopularCategories from "./components/PopularCategories";
+import WhyChooseUs from "./components/WhyChooseUs";
 
 function App() {
   return (
@@ -50,6 +52,8 @@ function App() {
         preserving the original jobsnepal.com look and feel.
       */}
       <FeaturedJobs />
+      <PopularCategories />
+      <WhyChooseUs />
     </div>
   );
 }
