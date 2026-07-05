@@ -21,22 +21,22 @@ export default function JobSidebar() {
 
       {/* ===== Section 1: Instant Job PLACEMENT ===== */}
       <div>
-        <h2 className="text-\[#0261a6] text-sm font-bold uppercase mb-2">
+        <h2 className="text-[#0261a6] text-sm font-bold uppercase mb-2">
           Instant Job PLACEMENT
         </h2>
-        <div className="border border-\[#efefef] rounded overflow-hidden">
+        <div className="border border-[#efefef] rounded overflow-hidden">
           <table className="w-full text-xs">
             <thead>
-              <tr className="bg-\[#0261a6] text-white uppercase text-\[10px]">
+              <tr className="bg-[#0261a6] text-white uppercase text-[10px]">
                 <th className="text-left px-3 py-2 font-semibold">Job Title</th>
-                <th className="text-center px-3 py-2 font-semibold w-\[70px]">Deadline</th>
+                <th className="text-center px-3 py-2 font-semibold w-[70px]">Deadline</th>
               </tr>
             </thead>
             <tbody>
               {instantJobs.map((job, i) => (
-                <tr key={i} className="border-t border-\[#efefef]">
+                <tr key={i} className="border-t border-[#efefef]">
                   <td className="px-3 py-2">
-                    <a href="#" className="text-\[#0261a6] hover:underline block truncate max-w-\[180px]" title={job.title}>
+                    <a href="#" className="text-[#0261a6] hover:underline block truncate max-w-[180px]" title={job.title}>
                       {job.title}
                     </a>
                   </td>
@@ -48,18 +48,18 @@ export default function JobSidebar() {
         </div>
       </div>
 
-   
+    
       <div>
-        <h2 className="text-\[#0261a6] text-sm font-bold uppercase mb-2">
+        <h2 className="text-[#0261a6] text-sm font-bold uppercase mb-2">
           Hot Jobs
         </h2>
-        <div className="border border-\[#efefef] p-2.5 rounded">
-          <div className="max-h-\[500px] overflow-y-auto space-y-1">
+        <div className="border border-[#efefef] p-2.5 rounded">
+          <div className="max-h-[500px] overflow-y-auto space-y-1">
             {hotJobs.map((item, i) => (
-              <div key={i} className="flex gap-3 py-3 border-b border-\[#f6f6f6] last:border-b-0">
+              <div key={i} className="flex gap-3 py-3 border-b border-[#f6f6f6] last:border-b-0">
                
                 <img
-                  src={`https://ui-avatars.com/api/?name=${encodeURIComponent(item.company)}\&background=0261a6\&color=fff\&size=50\&bold=true`}
+                  src={`https://ui-avatars.com/api/?name=${encodeURIComponent(item.company)}&background=0261a6&color=fff&size=50&bold=true`}
                   alt={item.company}
                   className="w-[50px] h-[50px] border border-[#efefef] rounded p-[3px] shrink-0"
                 />
@@ -74,7 +74,7 @@ export default function JobSidebar() {
                       className="block text-sm text-[#0261a6] hover:underline truncate leading-tight mb-0.5 pl-4 relative"
                       title={job}
                     >
-                      <span className="absolute left-0 top-\[7px] w-\[5px] h-\[5px] rounded-full border border-gray-400"></span>
+                      <span className="absolute left-0 top-[7px] w-[5px] h-[5px] rounded-full border border-gray-400"></span>
                       {job}
                     </a>
                   ))}

@@ -18,13 +18,7 @@
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import JobSidebar from "./components/JobSidebar";
-import TopJobs from "./components/TopJobs";
-import FeaturedJobs from "./components/FeaturedJobs";
-import PopularCategories from "./components/PopularCategories";
-import WhyChooseUs from "./components/WhyChooseUs";
-import TopCompanies from "./components/TopCompanies";
-import CallToAction from "./components/CallToAction";
-import Footer from "./components/Footer";
+
 import FeaturedJobs from "./components/FeaturedJobs";
 
 function App() {
@@ -32,7 +26,7 @@ function App() {
     <div className="min-h-screen bg-white">
       <Navbar />
       <HeroSection />
-      <FeaturedJobs />
+    
 
       {/*
         Two-column main area (matching the original site layout):
@@ -46,7 +40,6 @@ function App() {
             <JobSidebar />
           </aside>
           <section className="flex-1 min-w-0">
-            <TopJobs />
           </section>
         </div>
       </main>
@@ -57,11 +50,6 @@ function App() {
         preserving the original jobsnepal.com look and feel.
       */}
       <FeaturedJobs />
-      <PopularCategories />
-      <WhyChooseUs />
-      <TopCompanies />
-      <CallToAction />
-      <Footer />
     </div>
   );
 }
