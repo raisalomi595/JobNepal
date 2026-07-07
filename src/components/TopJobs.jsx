@@ -21,7 +21,7 @@ export default function TopJobs() {
   return (
     <div>
       {/* -------- Section heading (original: #0261a6) -------- */}
-      <h2 className="text-\\\\\\\[#0261a6] text-lg font-bold mb-4">Top Jobs</h2>
+      <h2 className="text-[#0261a6] text-lg font-bold mb-4">Top Jobs</h2>
 
       {/* -------- 2-column job card grid -------- */}
       {topJobs.length === 0 ? (
@@ -36,7 +36,7 @@ export default function TopJobs() {
               <div className="flex gap-3">
                 {/* Company logo */}
                 <img
-                  src={`https://ui-avatars.com/api/?name=${encodeURIComponent(job.company)}\\\\\\\&background=0261a6\\\\\\\&color=fff\\\\\\\&size=48\\\\\\\&bold=true`}
+                  src={`https://ui-avatars.com/api/?name=${encodeURIComponent(job.company)}&background=0261a6&color=fff&size=48&bold=true`}
                   alt={job.company}
                   className="w-12 h-12 rounded shrink-0"
                 />
@@ -64,8 +64,8 @@ export default function TopJobs() {
       )}
 
       {/* -------- See more jobs by types -------- */}
-      <div className="mt-6 pt-3 border-t border-\\\\\\\[#efefef]">
-        <a href="#" className="text-sm text-\\\\\\\[#0261a6] hover:underline font-medium">
+      <div className="mt-6 pt-3 border-t border-[#efefef]">
+        <a href="#" className="text-sm text-[#0261a6] hover:underline font-medium">
           See more jobs by types &rarr;
         </a>
       </div>

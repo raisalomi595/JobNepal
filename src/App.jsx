@@ -22,7 +22,10 @@ import JobSidebar from "./components/JobSidebar";
 import FeaturedJobs from "./components/FeaturedJobs";
 import PopularCategories from "./components/PopularCategories";
 import WhyChooseUs from "./components/WhyChooseUs";
+import TopJobs from "./components/TopJobs";
 import TopCompanies from "./components/TopCompanies";
+import CallToAction from "./components/CallToAction";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -43,6 +46,7 @@ function App() {
             <JobSidebar />
           </aside>
           <section className="flex-1 min-w-0">
+            <TopJobs />
           </section>
         </div>
       </main>
@@ -56,6 +60,8 @@ function App() {
       <PopularCategories />
       <WhyChooseUs />
       <TopCompanies />
+      <CallToAction />
+      <Footer />
     </div>
   );
 }
