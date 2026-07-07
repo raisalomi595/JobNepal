@@ -22,6 +22,7 @@ import JobSidebar from "./components/JobSidebar";
 import FeaturedJobs from "./components/FeaturedJobs";
 import PopularCategories from "./components/PopularCategories";
 import WhyChooseUs from "./components/WhyChooseUs";
+import TopCompanies from "./components/TopCompanies";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
       <FeaturedJobs />
       <PopularCategories />
       <WhyChooseUs />
+      <TopCompanies />
     </div>
   );
 }
