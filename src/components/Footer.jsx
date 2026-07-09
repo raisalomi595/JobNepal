@@ -1,33 +1,28 @@
+import { Link } from "react-router-dom";
+
 export default function Footer() {
   return (
     <>
-      {/* ===== Main footer (bg: #272727) ===== */}
       <footer className="bg-[#272727] text-gray-400">
-        <div className="container mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto px-4 py-8">
           <div className="flex flex-col lg:flex-row gap-8">
-
-            {/* -------- LEFT: 3 link columns -------- */}
             <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-6">
-
-              {/* Column 1: For Job Seekers */}
               <div>
                 <h3 className="text-base text-[#b3b3b3] font-light border-b border-[#3a3838] pb-1 mb-3">For Job Seekers</h3>
                 <ul className="space-y-1 text-sm text-[#b3b3b3]">
-                  <li><a href="#" className="hover:text-white transition-colors">Register <span className="bg-[#0261a6] text-white text-xs px-2 py-0.5 rounded-full ml-1">Free</span></a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Find Job</a></li>
+                  <li><Link to="/signup" className="hover:text-white transition-colors">Register <span className="bg-[#0261a6] text-white text-xs px-2 py-0.5 rounded-full ml-1">Free</span></Link></li>
+                  <li><Link to="/find-job" className="hover:text-white transition-colors">Find Job</Link></li>
                 </ul>
               </div>
 
-              {/* Column 2: For Employers */}
               <div>
                 <h3 className="text-base text-[#b3b3b3] font-light border-b border-[#3a3838] pb-1 mb-3">For Employers</h3>
                 <ul className="space-y-1 text-sm text-[#b3b3b3]">
-                  <li><a href="#" className="hover:text-white transition-colors">Register <span className="bg-[#0261a6] text-white text-xs px-2 py-0.5 rounded-full ml-1">Free</span></a></li>
-                  <li><a href="#" className="hover:text-white transition-colors">Vacancy Announcement</a></li>
+                  <li><Link to="/hire" className="hover:text-white transition-colors">Register <span className="bg-[#0261a6] text-white text-xs px-2 py-0.5 rounded-full ml-1">Free</span></Link></li>
+                  <li><Link to="/hire" className="hover:text-white transition-colors">Vacancy Announcement</Link></li>
                 </ul>
               </div>
 
-              {/* Column 3: Links */}
               <div>
                 <h3 className="text-base text-[#b3b3b3] font-light border-b border-[#3a3838] pb-1 mb-3">Links</h3>
                 <ul className="space-y-1 text-sm text-[#b3b3b3]">
@@ -38,7 +33,6 @@ export default function Footer() {
               </div>
             </div>
 
-            {/* -------- RIGHT: Logo + Contact + Social -------- */}
             <div className="lg:w-[320px]">
               <img
                 src="https://www.jobsnepal.com/assets/front/images/jn-logo@2x.png"
@@ -47,7 +41,6 @@ export default function Footer() {
               />
 
               <div className="space-y-2 text-sm text-[#b3b3b3]">
-                {/* Address — map pin */}
                 <div className="flex items-start gap-2">
                   <svg className="w-4 h-4 mt-0.5 shrink-0 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -56,21 +49,18 @@ export default function Footer() {
                   <span>Kupondole Road, Patan 44600,
 Kathmandu, Nepal</span>
                 </div>
-                {/* Phone 1 */}
                 <div className="flex items-center gap-2">
                   <svg className="w-4 h-4 shrink-0 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                   <span>01-544 7709, 01-544 7710</span>
                 </div>
-                {/* Phone 2 */}
                 <div className="flex items-center gap-2">
                   <svg className="w-4 h-4 shrink-0 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                   <span>+977 984 942 6300</span>
                 </div>
-                {/* Email */}
                 <div className="flex items-center gap-2">
                   <svg className="w-4 h-4 shrink-0 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -79,7 +69,6 @@ Kathmandu, Nepal</span>
                 </div>
               </div>
 
-              {/* Social icons (original: gray circles) */}
               <div className="flex gap-2 mt-4">
                 {[
                   { name: "Facebook", path: "M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" },
@@ -97,7 +86,6 @@ Kathmandu, Nepal</span>
         </div>
       </footer>
 
-      {/* ===== Copyright bar (bg: #2b2b2b) ===== */}
       <div className="bg-[#2b2b2b] py-3 text-center text-xs text-[#b8b8b8]">
         &copy; 2000 - 2026 JobsNepal Pvt. Ltd. All Right Reserved.
       </div>

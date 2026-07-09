@@ -1,20 +1,82 @@
 const companies = [
-  { name: "Google", initial: "G", color: "bg-blue-500" },
-  { name: "Microsoft", initial: "M", color: "bg-green-500" },
-  { name: "Amazon", initial: "A", color: "bg-orange-500" },
-  { name: "Apple", initial: "A", color: "bg-gray-800" },
-  { name: "Meta", initial: "M", color: "bg-blue-600" },
-  { name: "Netflix", initial: "N", color: "bg-red-500" },
-  { name: "Spotify", initial: "S", color: "bg-green-600" },
-  { name: "Tesla", initial: "T", color: "bg-red-600" },
+  {
+    name: "Google",
+    logo: (
+      <svg viewBox="0 0 48 48" className="w-10 h-10">
+        <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z" />
+        <path fill="#FF3D00" d="m6.306 14.691 6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z" />
+        <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z" />
+        <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Microsoft",
+    logo: (
+      <svg viewBox="0 0 48 48" className="w-10 h-10">
+        <rect x="6" y="6" width="16" height="16" fill="#F25022" />
+        <rect x="26" y="6" width="16" height="16" fill="#7FBA00" />
+        <rect x="6" y="26" width="16" height="16" fill="#00A4EF" />
+        <rect x="26" y="26" width="16" height="16" fill="#FFB900" />
+      </svg>
+    ),
+  },
+  {
+    name: "Amazon",
+    logo: (
+      <svg viewBox="0 0 48 48" className="w-10 h-10">
+        <path fill="#FF9900" d="M35.46 34.22c-3.8 2.8-9.32 4.3-14.06 4.3-6.66 0-12.66-2.46-17.2-6.56-.36-.32-.04-.76.4-.5 4.9 2.84 10.94 4.56 17.2 4.56 4.22 0 8.86-.88 13.12-2.68.64-.28 1.18.42.54.88zm2.2-2.48c-.48-.62-3.18-.3-4.4-.16-.38.06-.44-.28-.1-.52 2.14-1.5 5.66-1.08 6.08-.58.42.52-.12 4.1-2.12 5.8-.3.26-.6.12-.46-.22.44-1.14 1.44-3.7 1-4.36zM27.36 22.9c0-1.84.92-3.32 2.76-4.44 1.84-1.12 4.2-1.68 7.08-1.68.8 0 1.64.04 2.52.16.88.12 1.72.28 2.52.48v-2c0-3.36-1.72-5.04-5.16-5.04-2.24 0-4.56.76-6.96 2.28l-1.44-2.92c2.72-1.76 5.76-2.64 9.12-2.64 2.68 0 4.72.76 6.12 2.28 1.4 1.52 2.1 3.72 2.1 6.6v11.68h-3.72v-2.04h-.12c-1.12 1.6-2.68 2.84-4.68 3.72s-4.08 1.32-6.24 1.32c-2.36 0-4.32-.6-5.88-1.8s-2.24-2.8-2.24-4.8zm4.44-.36c0 1.48.68 2.6 2.04 3.36s2.92 1.2 4.68 1.2c1.48 0 2.92-.28 4.32-.84s2.52-1.4 3.48-2.52v-4.68c-.56-.16-1.24-.28-2.04-.36s-1.56-.12-2.4-.12c-1.88 0-3.48.36-4.8 1.08s-2.28 1.8-2.28 3.24v.48z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Apple",
+    logo: (
+      <svg viewBox="0 0 48 48" className="w-10 h-10">
+        <path fill="#555" d="M33.22 23.98c.02-3.54 1.76-6.58 4.48-8.42-1.72-2.24-4.24-3.48-6.94-3.56-2.86-.28-5.56 1.62-7.08 1.62-1.58 0-3.92-1.56-6.5-1.52-3.34.04-6.46 1.94-8.18 4.94-3.56 6.18-.9 15.3 2.5 20.3 1.68 2.5 3.68 5.28 6.34 5.18 2.5-.1 3.46-1.66 6.52-1.66 3.04 0 3.92 1.66 6.56 1.6 2.72-.04 4.44-2.52 6.08-5.04 1.1-1.64 1.78-3.44 2.18-5.36-2.9-1.14-4.95-3.92-5.06-7.24zM28.4 11.9c1.38-1.7 2.16-3.88 1.96-6.12-1.92.16-3.84.94-5.2 2.36-1.28 1.34-2.14 3.18-2 5.2 2.04.08 3.86-.7 5.24-1.44z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Meta",
+    logo: (
+      <svg viewBox="0 0 48 48" className="w-10 h-10">
+        <path fill="#1877F2" d="M24 4C12.954 4 4 12.954 4 24s8.954 20 20 20 20-8.954 20-20S35.046 4 24 4zm4.46 20.72v10.76h-4.46V24.72h-3.4v-3.74h3.4v-2.96c0-3.36 2.06-5.2 5.06-5.2 1.44 0 2.68.1 3.04.16v3.52h-2.08c-1.64 0-1.96.78-1.96 1.92v2.52h3.92l-.5 3.74h-3.42z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Netflix",
+    logo: (
+      <svg viewBox="0 0 48 48" className="w-10 h-10">
+        <path fill="#E50914" d="M12 4v40l12-9.6V34l6 4.8V4l-6 4.8v6.4l-6 4.8V4h-6zm24 0v40h-6V4h6z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Spotify",
+    logo: (
+      <svg viewBox="0 0 48 48" className="w-10 h-10">
+        <circle cx="24" cy="24" r="20" fill="#1DB954" />
+        <path fill="#fff" d="M33.72 31.4c-.32.52-.98.68-1.5.36-4.12-2.52-9.3-3.08-15.42-1.7-.6.14-1.18-.24-1.32-.82-.14-.58.24-1.18.82-1.32 6.7-1.56 12.44-.92 17.06 1.96.5.32.66.98.36 1.5v.02zm2.4-4.76c-.4.64-1.22.84-1.86.44-4.72-2.9-11.92-3.74-17.5-2.04-.7.22-1.46-.18-1.68-.86-.22-.7.18-1.46.88-1.68 6.28-1.94 14.14-1 19.44 2.3.62.4.84 1.22.42 1.86v-.02zm.2-4.96c-5.66-3.36-15-3.68-20.4-2.04-.84.26-1.74-.22-2-.96-.26-.84.22-1.74.96-2 6.08-1.82 16.14-1.48 22.56 2.42.76.46 1.02 1.44.56 2.2-.46.76-1.44 1.02-2.2.56l.52-.18z" />
+      </svg>
+    ),
+  },
+  {
+    name: "Tesla",
+    logo: (
+      <svg viewBox="0 0 48 48" className="w-10 h-10">
+        <path fill="#E82127" d="M12 4h24v4H12V4zm0 8h24v4H12v-4zm-2 8h28v4H10v-4zm-2 8h32v4H8v-4zm-2 8h36v4H6v-4z" />
+      </svg>
+    ),
+  },
 ];
 
 export default function TopCompanies() {
   return (
     <section className="py-12 bg-white">
-      <div className="container mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-10">
-          {/* ✅ Fixed: removed all the backslashes */}
           <h2 className="text-2xl font-bold text-[#0261a6]">
             Top Hiring Companies
           </h2>
@@ -25,8 +87,8 @@ export default function TopCompanies() {
         <div className="flex flex-wrap items-center justify-center gap-8 md:gap-12">
           {companies.map((company) => (
             <a key={company.name} href="#" className="group flex flex-col items-center gap-2">
-              <div className={`w-20 h-20 md:w-24 md:h-24 ${company.color} rounded-2xl flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-300`}>
-                <span className="text-2xl md:text-3xl font-bold text-white">{company.initial}</span>
+              <div className="w-24 h-24 bg-white border border-gray-200 rounded-2xl flex items-center justify-center shadow-md group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-300">
+                {company.logo}
               </div>
               <span className="text-sm font-medium text-gray-500 group-hover:text-gray-900 transition-colors">{company.name}</span>
             </a>

@@ -20,9 +20,9 @@ const categories = [
 export default function PopularCategories() {
   return (
     <section className="py-12 bg-white">
-      <div className="container mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-10">
-          <h2 className="text-2xl font-bold text-\\\[#0261a6]">Popular Categories</h2>
+          <h2 className="text-2xl font-bold text-[#0261a6]">Popular Categories</h2>
           <p className="mt-2 text-gray-500">Browse jobs by category and find your perfect role</p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
