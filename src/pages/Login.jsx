@@ -1,8 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Toast from "../components/Toast";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "", remember: false });
+  const [toast, setToast] = useState(null);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -11,6 +14,16 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const user = users.find(
+      (u) => u.email === form.email && u.password === form.password
+    );
+    if (user) {
+      setToast({ message: "Login successfully!", type: "success" });
+      setTimeout(() => navigate("/"), 1500);
+    } else {
+      setToast({ message: "Invalid email or password!", type: "error" });
+    }
   };
 
   return (
@@ -85,6 +98,7 @@ export default function Login() {
           <a href="#" className="text-[#0261a6] hover:underline">Privacy Policy</a>
         </p>
       </div>
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     </div>
   );
 }

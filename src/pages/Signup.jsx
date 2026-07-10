@@ -1,11 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Toast from "../components/Toast";
 
 export default function Signup() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     email: "", retypeEmail: "", password: "", retypePassword: "",
     firstName: "", lastName: "", contact: "", category: "",
   });
+  const [toast, setToast] = useState(null);
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -13,6 +16,30 @@ export default function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (form.email !== form.retypeEmail) {
+      setToast({ message: "Emails do not match!", type: "error" });
+      return;
+    }
+    if (form.password !== form.retypePassword) {
+      setToast({ message: "Passwords do not match!", type: "error" });
+      return;
+    }
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    if (users.find((u) => u.email === form.email)) {
+      setToast({ message: "Email already registered!", type: "error" });
+      return;
+    }
+    users.push({
+      email: form.email,
+      password: form.password,
+      firstName: form.firstName,
+      lastName: form.lastName,
+      contact: form.contact,
+      category: form.category,
+    });
+    localStorage.setItem("users", JSON.stringify(users));
+    setToast({ message: "Sign up successfully!", type: "success" });
+    setTimeout(() => navigate("/login"), 1500);
   };
 
   return (
@@ -119,6 +146,7 @@ export default function Signup() {
           </p>
         </div>
       </div>
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     </div>
   );
 }
