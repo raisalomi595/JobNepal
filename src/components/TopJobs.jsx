@@ -63,9 +63,9 @@ export default function TopJobs() {
       )}
 
       <div className="mt-6 pt-3 border-t border-[#efefef]">
-        <a href="#" className="text-sm text-[#0261a6] hover:underline font-medium">
+        <Link to="/find-job" className="text-sm text-[#0261a6] hover:underline font-medium">
           See more jobs by types &rarr;
-        </a>
+        </Link>
       </div>
     </div>
   );

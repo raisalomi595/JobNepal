@@ -76,7 +76,7 @@ export default function Login() {
               />
               <span className="text-gray-600">Remember</span>
             </label>
-            <a href="#" className="text-[#0261a6] hover:underline">Forgot password?</a>
+            <Link to="/" className="text-[#0261a6] hover:underline">Forgot password?</Link>
           </div>
 
           <button
@@ -94,8 +94,8 @@ export default function Login() {
 
         <p className="text-xs text-gray-400 text-center mt-4 leading-relaxed">
           By continuing, you're confirming that you've read our{" "}
-          <a href="#" className="text-[#0261a6] hover:underline">Terms & Conditions</a> and{" "}
-          <a href="#" className="text-[#0261a6] hover:underline">Privacy Policy</a>
+          <Link to="/" className="text-[#0261a6] hover:underline">Terms & Conditions</Link> and{" "}
+          <Link to="/" className="text-[#0261a6] hover:underline">Privacy Policy</Link>
         </p>
       </div>
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}

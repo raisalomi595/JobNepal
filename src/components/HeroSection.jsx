@@ -1,4 +1,17 @@
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
 export default function HeroSection() {
+  const navigate = useNavigate();
+  const [keyword, setKeyword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const params = new URLSearchParams();
+    if (keyword.trim()) params.set("keyword", keyword.trim());
+    navigate(`/find-job?${params.toString()}`);
+  };
+
   return (
     <section className="relative bg-[#0261a6] text-white pt-[70px] pb-8 md:pb-12 overflow-hidden">
       <div className="absolute left-[3vw] w-[210px] h-[210px] bg-[#032d4b] opacity-18 rounded-lg bottom-[-150px] rotate-55 hidden md:block"></div>
@@ -10,7 +23,7 @@ export default function HeroSection() {
             Find jobs, vacancy, career online.
           </h2>
 
-          <form className="flex flex-wrap items-stretch">
+          <form onSubmit={handleSubmit} className="flex flex-wrap items-stretch">
             <div className="flex-1 min-w-[280px] max-w-[450px]">
               <div className="flex items-stretch bg-white rounded overflow-hidden">
                 <span className="flex items-center justify-center w-[50px] text-gray-600 text-[22px]">
@@ -20,6 +33,8 @@ export default function HeroSection() {
                 </span>
                 <input
                   type="text"
+                  value={keyword}
+                  onChange={(e) => setKeyword(e.target.value)}
                   placeholder="Job Title, Job Category, Company"
                   className="flex-1 h-[50px] px-3 text-sm text-gray-600 outline-none border-none bg-transparent"
                 />

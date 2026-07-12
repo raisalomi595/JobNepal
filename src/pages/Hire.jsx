@@ -1,11 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Toast from "../components/Toast";
 
 export default function Hire() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     company: "", email: "", phone: "", password: "", confirmPassword: "",
     address: "", website: "", description: "",
   });
+  const [toast, setToast] = useState(null);
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -13,6 +16,27 @@ export default function Hire() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (form.password !== form.confirmPassword) {
+      setToast({ message: "Passwords do not match!", type: "error" });
+      return;
+    }
+    const employers = JSON.parse(localStorage.getItem("employers") || "[]");
+    if (employers.find((e) => e.email === form.email)) {
+      setToast({ message: "Email already registered!", type: "error" });
+      return;
+    }
+    employers.push({
+      company: form.company,
+      email: form.email,
+      phone: form.phone,
+      password: form.password,
+      address: form.address,
+      website: form.website,
+      description: form.description,
+    });
+    localStorage.setItem("employers", JSON.stringify(employers));
+    setToast({ message: "Company registered successfully!", type: "success" });
+    setTimeout(() => navigate("/login"), 1500);
   };
 
   return (
@@ -81,8 +105,8 @@ export default function Hire() {
 
           <p className="text-xs text-gray-400 text-center">
             By registering, you agree to our{" "}
-            <a href="#" className="text-[#0261a6] hover:underline">Terms & Conditions</a> and{" "}
-            <a href="#" className="text-[#0261a6] hover:underline">Privacy Policy</a>
+            <Link to="/" className="text-[#0261a6] hover:underline">Terms & Conditions</Link> and{" "}
+            <Link to="/" className="text-[#0261a6] hover:underline">Privacy Policy</Link>
           </p>
 
           <p className="text-sm text-center text-gray-500">
@@ -91,6 +115,7 @@ export default function Hire() {
           </p>
         </form>
       </div>
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     </div>
   );
 }

@@ -55,7 +55,7 @@ export default function FeaturedJobs() {
         </div>
 
         <div className="text-center mt-8">
-          <a href="#" className="inline-block text-sm font-semibold text-[#0261a6] border border-[#0261a6] hover:bg-[#0261a6] hover:text-white px-6 py-2.5 rounded transition-colors">View All Jobs</a>
+          <Link to="/find-job" className="inline-block text-sm font-semibold text-[#0261a6] border border-[#0261a6] hover:bg-[#0261a6] hover:text-white px-6 py-2.5 rounded transition-colors">View All Jobs</Link>
         </div>
       </div>
     </section>

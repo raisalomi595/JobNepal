@@ -5,24 +5,31 @@ const navLinks = [
   {
     label: "Search",
     dropdown: [
-      "Search Job", "Top Jobs", "Hot Jobs", "Normal Jobs",
-      "Instant Jobs", "Premium Jobs", "IT Jobs",
-      "Hospitality Jobs", "Admin/Management Jobs",
-      "NGO/INGO Jobs", "Tender Notice, EOI, Bids",
+      { label: "Search Job", to: "/find-job" },
+      { label: "Top Jobs", to: "/find-job?type=Full-time" },
+      { label: "Hot Jobs", to: "/find-job" },
+      { label: "Normal Jobs", to: "/find-job" },
+      { label: "Instant Jobs", to: "/find-job" },
+      { label: "Premium Jobs", to: "/find-job" },
+      { label: "IT Jobs", to: "/find-job?category=Information+Technology" },
+      { label: "Hospitality Jobs", to: "/find-job?category=Hospitality+%2F+Tourism" },
+      { label: "Admin/Management Jobs", to: "/find-job?category=Administration" },
+      { label: "NGO/INGO Jobs", to: "/find-job?category=NGO+%2F+INGO" },
+      { label: "Tender Notice, EOI, Bids", to: "/find-job?type=Contract" },
     ],
   },
-  { label: "About Us" },
+  { label: "About Us", to: "/" },
   {
     label: "Services",
     dropdown: [
-      "Direct Recruitment Service",
-      "Vacancy Announcement Service",
-      "Web Banner Advertisement Service",
+      { label: "Direct Recruitment Service", to: "/" },
+      { label: "Vacancy Announcement Service", to: "/hire" },
+      { label: "Web Banner Advertisement Service", to: "/" },
     ],
   },
-  { label: "Help", dropdown: ["FAQ"] },
-  { label: "Blog" },
-  { label: "Contact Us" },
+  { label: "Help", dropdown: [{ label: "FAQ", to: "/" }] },
+  { label: "Blog", to: "/" },
+  { label: "Contact Us", to: "/" },
 ];
 
 export default function Navbar() {
@@ -42,23 +49,32 @@ export default function Navbar() {
         <nav className="hidden lg:flex items-center text-white text-[16px] font-light">
           {navLinks.map((link) => (
             <div key={link.label} className="relative group mx-2">
-              <a
-                href="#"
-                className="nav-link block hover:text-[#fc8b07] transition-colors"
-              >
-                {link.label}
-                {link.dropdown && <span className="ml-1 text-xs">&#9662;</span>}
-              </a>
+              {link.dropdown ? (
+                <a
+                  href="#"
+                  className="nav-link block hover:text-[#fc8b07] transition-colors"
+                >
+                  {link.label}
+                  <span className="ml-1 text-xs">&#9662;</span>
+                </a>
+              ) : (
+                <Link
+                  to={link.to}
+                  className="nav-link block hover:text-[#fc8b07] transition-colors"
+                >
+                  {link.label}
+                </Link>
+              )}
               {link.dropdown && (
                 <div className="absolute top-full left-0 bg-white text-gray-700 shadow-lg rounded-b-md py-2 min-w-[200px] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 text-sm">
                   {link.dropdown.map((item) => (
-                    <a
-                      key={item}
-                      href="#"
+                    <Link
+                      key={item.label}
+                      to={item.to}
                       className="block px-4 py-1.5 text-sm hover:bg-[#fc8b07] hover:text-white"
                     >
-                      {item}
-                    </a>
+                      {item.label}
+                    </Link>
                   ))}
                 </div>
               )}
@@ -112,15 +128,19 @@ export default function Navbar() {
           <div className="px-4 py-2 space-y-1">
             {navLinks.map((link) => (
               <div key={link.label}>
-                <a href="#" className="block px-3 py-2 font-medium hover:text-[#fc8b07]">
-                  {link.label}
-                </a>
+                {link.dropdown ? (
+                  <span className="block px-3 py-2 font-medium text-white/80">{link.label}</span>
+                ) : (
+                  <Link to={link.to} onClick={() => setMenuOpen(false)} className="block px-3 py-2 font-medium hover:text-[#fc8b07]">
+                    {link.label}
+                  </Link>
+                )}
                 {link.dropdown && (
                   <div className="ml-4 pb-2 space-y-1">
                     {link.dropdown.map((item) => (
-                      <a key={item} href="#" className="block py-1 text-white/70 hover:text-[#fc8b07] px-3">
-                        {item}
-                      </a>
+                      <Link key={item.label} to={item.to} onClick={() => setMenuOpen(false)} className="block py-1 text-white/70 hover:text-[#fc8b07] px-3">
+                        {item.label}
+                      </Link>
                     ))}
                   </div>
                 )}
@@ -128,8 +148,8 @@ export default function Navbar() {
             ))}
           </div>
           <div className="border-t border-white/10 px-4 py-3 flex gap-2">
-            <Link to="/login" className="flex-1 text-center bg-white text-gray-700 px-3 py-2 rounded text-sm font-medium uppercase">Log In</Link>
-            <Link to="/signup" className="flex-1 text-center bg-[#fc8b07] text-white px-3 py-2 rounded text-sm font-medium uppercase">Sign Up</Link>
+            <Link to="/login" onClick={() => setMenuOpen(false)} className="flex-1 text-center bg-white text-gray-700 px-3 py-2 rounded text-sm font-medium uppercase">Log In</Link>
+            <Link to="/signup" onClick={() => setMenuOpen(false)} className="flex-1 text-center bg-[#fc8b07] text-white px-3 py-2 rounded text-sm font-medium uppercase">Sign Up</Link>
           </div>
         </div>
       )}
