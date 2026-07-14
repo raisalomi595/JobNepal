@@ -1,12 +1,21 @@
 import { Link } from "react-router-dom";
 
+const companyLogos = {
+  "Welthungerhilfe": "https://img.jobsnepal.com/x-small/1FW1a30TFU3Goy3tvf8SNo9u5U66TRHDaJjMbply.jpeg",
+  "HERD International": "https://img.jobsnepal.com/x-small/0KQw35oFeE95pLiJbC3ccuH5DSuY5Us5aWfzsaTY.jpeg",
+  "Doublard Design Pvt. Ltd": "https://img.jobsnepal.com/x-small/uc9bbHYHI2qbmsxfhLp3XoJjsFKzgU2N45xkwruE.png",
+  "Action Nepal": "https://img.jobsnepal.com/x-small/1SPimNMMmaMtvjRDjtPwqB94nuZgldT3MgOMmJis.jpeg",
+  "Alliance Asia Nepal Private Ltd": "https://img.jobsnepal.com/x-small/yLhdPtOZScb7hYDlnnL6CkbXoImDd4P72UdkbI8E.jpg",
+  "dZi Foundation": "https://img.jobsnepal.com/x-small/bDFMNxPBtrQ4FoVm31BWiq6d4XXXlq3DDljP6dAM.jpeg",
+};
+
 const jobs = [
-  { id: 201, title: "Senior Frontend Developer", company: "TechCorp Nepal", location: "Kathmandu", type: "Full-time", salary: "Rs. 120k - 150k", posted: "2 days ago", logo: "TN", color: "bg-blue-500" },
-  { id: 202, title: "Data Analyst", company: "CloudMiner Pvt. Ltd.", location: "Lalitpur", type: "Full-time", salary: "Rs. 80k - 100k", posted: "3 days ago", logo: "CM", color: "bg-green-500" },
-  { id: 203, title: "UX/UI Designer", company: "DesignStudio Nepal", location: "Remote", type: "Contract", salary: "Rs. 70k - 90k", posted: "1 day ago", logo: "DS", color: "bg-purple-500" },
-  { id: 204, title: "Python Backend Engineer", company: "InnovateTech", location: "Pokhara", type: "Full-time", salary: "Rs. 100k - 130k", posted: "5 days ago", logo: "IT", color: "bg-orange-500" },
-  { id: 205, title: "Product Manager", company: "GrowthLab", location: "Kathmandu", type: "Full-time", salary: "Rs. 150k - 200k", posted: "1 week ago", logo: "GL", color: "bg-pink-500" },
-  { id: 206, title: "DevOps Engineer", company: "CloudBase", location: "Lalitpur", type: "Full-time", salary: "Rs. 130k - 160k", posted: "4 days ago", logo: "CB", color: "bg-teal-500" },
+  { id: 201, title: "Senior Communication and Monitoring Officer", company: "HERD International", location: "Lalitpur", type: "Full-time", salary: "Rs. 80k - 100k", posted: "2 days ago" },
+  { id: 202, title: "Laravel Developer - Proprietary CMS & ERP Integration", company: "Doublard Design Pvt. Ltd", location: "Kathmandu", type: "Full-time", salary: "Rs. 70k - 90k", posted: "3 days ago" },
+  { id: 203, title: "Infrastructure Development Officer", company: "dZi Foundation", location: "Panchthar District", type: "Contract", salary: "Rs. 90k - 120k", posted: "1 day ago" },
+  { id: 204, title: "Request for Proposals (RFP): Video Production", company: "Alliance Asia Nepal Private Ltd", location: "Lalitpur", type: "Contract", salary: "Negotiable", posted: "5 days ago" },
+  { id: 205, title: "Registration Notice", company: "Action Nepal", location: "Kathmandu", type: "Full-time", salary: "As per org", posted: "1 week ago" },
+  { id: 206, title: "Terms of Reference for Statutory Audit", company: "Welthungerhilfe", location: "Lalitpur", type: "Full-time", salary: "Rs. 120k - 150k", posted: "4 days ago" },
 ];
 
 const typeColors = {
@@ -31,7 +40,15 @@ export default function FeaturedJobs() {
               className="bg-white border border-[#efefef] rounded p-5 hover:shadow-md hover:border-gray-300 transition-all duration-300 group block"
             >
               <div className="flex items-start justify-between mb-3">
-                <div className={`w-11 h-11 ${job.color} rounded flex items-center justify-center text-white font-bold text-sm`}>{job.logo}</div>
+                <img
+                  src={companyLogos[job.company] || `https://ui-avatars.com/api/?name=${encodeURIComponent(job.company)}&background=0261a6&color=fff&size=48&bold=true`}
+                  alt={job.company}
+                  className="w-11 h-11 border border-[#efefef] rounded object-contain p-1"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(job.company)}&background=0261a6&color=fff&size=48&bold=true`;
+                  }}
+                />
                 <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${typeColors[job.type]}`}>{job.type}</span>
               </div>
               <h3 className="text-sm font-semibold text-gray-900 group-hover:text-[#0261a6] transition-colors mb-0.5">{job.title}</h3>
