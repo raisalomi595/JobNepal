@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import AuthModal from "./components/AuthModal";
 import Home from "./pages/Home";
 import JobDetail from "./pages/JobDetail";
 import Login from "./pages/Login";
@@ -15,9 +17,15 @@ import DirectRecruitment from "./pages/DirectRecruitment";
 import WebBanner from "./pages/WebBanner";
 
 function App() {
+  const [authModal, setAuthModal] = useState(null);
+
+  const openLogin = () => setAuthModal("login");
+  const openSignup = () => setAuthModal("signup");
+  const closeAuth = () => setAuthModal(null);
+
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
+      <Navbar onOpenLogin={openLogin} onOpenSignup={openSignup} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -33,6 +41,7 @@ function App() {
         <Route path="/find-job" element={<FindJob />} />
       </Routes>
       <Footer />
+      <AuthModal mode={authModal} onClose={closeAuth} />
     </div>
   );
 }

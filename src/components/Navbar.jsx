@@ -32,7 +32,7 @@ const navLinks = [
   { label: "Contact Us", to: "/contact" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ onOpenLogin, onOpenSignup }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const dropdownRef = useRef(null);
@@ -102,32 +102,18 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-2">
-          <Link
-            to="/login"
-            className="bg-white text-gray-700 px-4 py-1.5 rounded text-sm font-medium uppercase hover:text-gray-900 transition"
+          <button
+            onClick={onOpenLogin}
+            className="bg-white text-gray-700 px-4 py-1.5 rounded text-sm font-medium uppercase hover:text-gray-900 transition cursor-pointer"
           >
             Log In
-          </Link>
-          <div className="relative">
-            <button
-              onClick={() => toggleDropdown("signup")}
-              className="bg-[#fc8b07] text-white px-4 py-1.5 rounded text-sm font-medium uppercase hover:bg-[#e07d09] transition cursor-pointer"
-            >
-              Sign Up &#9662;
-            </button>
-            {openDropdown === "signup" && (
-              <div className="absolute right-0 top-full bg-white text-gray-700 shadow-lg rounded-md py-2 min-w-[230px] z-50">
-                <Link to="/signup" onClick={() => setOpenDropdown(null)} className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100">
-                  <span className="text-lg">&#128100;</span> Register JobSeeker
-                  <span className="ml-auto bg-[#0261a6] text-white text-xs font-bold px-2 py-0.5 rounded-full">FREE</span>
-                </Link>
-                <Link to="/hire" onClick={() => setOpenDropdown(null)} className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100">
-                  <span className="text-lg">&#127970;</span> Register Company
-                  <span className="ml-auto bg-[#0261a6] text-white text-xs font-bold px-2 py-0.5 rounded-full">FREE</span>
-                </Link>
-              </div>
-            )}
-          </div>
+          </button>
+          <button
+            onClick={onOpenSignup}
+            className="bg-[#fc8b07] text-white px-4 py-1.5 rounded text-sm font-medium uppercase hover:bg-[#e07d09] transition cursor-pointer"
+          >
+            Sign Up
+          </button>
         </div>
 
         <button
@@ -178,8 +164,8 @@ export default function Navbar() {
             ))}
           </div>
           <div className="border-t border-white/10 px-4 py-3 flex gap-2">
-            <Link to="/login" onClick={() => setMenuOpen(false)} className="flex-1 text-center bg-white text-gray-700 px-3 py-2 rounded text-sm font-medium uppercase">Log In</Link>
-            <Link to="/signup" onClick={() => setMenuOpen(false)} className="flex-1 text-center bg-[#fc8b07] text-white px-3 py-2 rounded text-sm font-medium uppercase">Sign Up</Link>
+            <button onClick={() => { setMenuOpen(false); onOpenLogin(); }} className="flex-1 text-center bg-white text-gray-700 px-3 py-2 rounded text-sm font-medium uppercase cursor-pointer">Log In</button>
+            <button onClick={() => { setMenuOpen(false); onOpenSignup(); }} className="flex-1 text-center bg-[#fc8b07] text-white px-3 py-2 rounded text-sm font-medium uppercase cursor-pointer">Sign Up</button>
           </div>
         </div>
       )}
