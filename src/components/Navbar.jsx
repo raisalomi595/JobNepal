@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const navLinks = [
   {
@@ -35,12 +36,19 @@ const navLinks = [
 export default function Navbar({ onOpenLogin, onOpenSignup }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [profileOpen, setProfileOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const profileRef = useRef(null);
+  const { isAuthenticated, user, logout } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     function handleClickOutside(e) {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setOpenDropdown(null);
+      }
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
+        setProfileOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -102,18 +110,53 @@ export default function Navbar({ onOpenLogin, onOpenSignup }) {
         </nav>
 
         <div className="hidden lg:flex items-center gap-2">
-          <button
-            onClick={onOpenLogin}
-            className="bg-white text-gray-700 px-4 py-1.5 rounded text-sm font-medium uppercase hover:text-gray-900 transition cursor-pointer"
-          >
-            Log In
-          </button>
-          <button
-            onClick={onOpenSignup}
-            className="bg-[#fc8b07] text-white px-4 py-1.5 rounded text-sm font-medium uppercase hover:bg-[#e07d09] transition cursor-pointer"
-          >
-            Sign Up
-          </button>
+          {isAuthenticated ? (
+            <div className="relative" ref={profileRef}>
+              <button
+                onClick={() => setProfileOpen(!profileOpen)}
+                className="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded transition-colors cursor-pointer"
+              >
+                <div className="w-7 h-7 bg-[#fc8b07] rounded-full flex items-center justify-center text-white font-bold text-xs">
+                  {user?.firstName?.[0]}{user?.lastName?.[0]}
+                </div>
+                <span className="text-sm font-medium">{user?.firstName}</span>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {profileOpen && (
+                <div className="absolute right-0 top-full mt-1 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                  <Link to="/dashboard" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setProfileOpen(false)}>Dashboard</Link>
+                  <Link to="/dashboard/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setProfileOpen(false)}>My Profile</Link>
+                  <Link to="/dashboard/applications" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setProfileOpen(false)}>My Applications</Link>
+                  <Link to="/dashboard/saved-jobs" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setProfileOpen(false)}>Saved Jobs</Link>
+                  <Link to="/dashboard/settings" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50" onClick={() => setProfileOpen(false)}>Settings</Link>
+                  <hr className="my-1 border-gray-100" />
+                  <button
+                    onClick={() => { logout(); setProfileOpen(false); navigate("/"); }}
+                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <>
+              <button
+                onClick={onOpenLogin}
+                className="bg-white text-gray-700 px-4 py-1.5 rounded text-sm font-medium uppercase hover:text-gray-900 transition cursor-pointer"
+              >
+                Log In
+              </button>
+              <button
+                onClick={onOpenSignup}
+                className="bg-[#fc8b07] text-white px-4 py-1.5 rounded text-sm font-medium uppercase hover:bg-[#e07d09] transition cursor-pointer"
+              >
+                Sign Up
+              </button>
+            </>
+          )}
         </div>
 
         <button
@@ -164,8 +207,17 @@ export default function Navbar({ onOpenLogin, onOpenSignup }) {
             ))}
           </div>
           <div className="border-t border-white/10 px-4 py-3 flex gap-2">
-            <button onClick={() => { setMenuOpen(false); onOpenLogin(); }} className="flex-1 text-center bg-white text-gray-700 px-3 py-2 rounded text-sm font-medium uppercase cursor-pointer">Log In</button>
-            <button onClick={() => { setMenuOpen(false); onOpenSignup(); }} className="flex-1 text-center bg-[#fc8b07] text-white px-3 py-2 rounded text-sm font-medium uppercase cursor-pointer">Sign Up</button>
+            {isAuthenticated ? (
+              <div className="w-full space-y-2">
+                <Link to="/dashboard" onClick={() => setMenuOpen(false)} className="block text-center bg-white/10 text-white px-3 py-2 rounded text-sm font-medium">Dashboard</Link>
+                <button onClick={() => { logout(); setMenuOpen(false); }} className="w-full text-center bg-red-500/20 text-red-300 px-3 py-2 rounded text-sm font-medium cursor-pointer">Sign Out</button>
+              </div>
+            ) : (
+              <>
+                <button onClick={() => { setMenuOpen(false); onOpenLogin(); }} className="flex-1 text-center bg-white text-gray-700 px-3 py-2 rounded text-sm font-medium uppercase cursor-pointer">Log In</button>
+                <button onClick={() => { setMenuOpen(false); onOpenSignup(); }} className="flex-1 text-center bg-[#fc8b07] text-white px-3 py-2 rounded text-sm font-medium uppercase cursor-pointer">Sign Up</button>
+              </>
+            )}
           </div>
         </div>
       )}

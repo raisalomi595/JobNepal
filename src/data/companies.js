@@ -1,0 +1,12 @@
+export const companies = [
+  { id: 1, name: "TechCorp Nepal", logo: "https://ui-avatars.com/api/?name=TC&background=0261a6&color=fff&size=64", location: "Kathmandu", industry: "Information Technology", jobs_count: 5, description: "Leading tech company in Nepal specializing in web and mobile development." },
+  { id: 2, name: "CloudMiner Pvt. Ltd.", logo: "https://ui-avatars.com/api/?name=CM&background=0261a6&color=fff&size=64", location: "Lalitpur", industry: "Information Technology", jobs_count: 3, description: "Data analytics and cloud solutions provider." },
+  { id: 3, name: "WWF Nepal", logo: "https://ui-avatars.com/api/?name=WWF&background=0261a6&color=fff&size=64", location: "Kathmandu", industry: "NGO / INGO", jobs_count: 2, description: "World Wildlife Fund Nepal office." },
+  { id: 4, name: "CARE Nepal", logo: "https://ui-avatars.com/api/?name=CN&background=0261a6&color=fff&size=64", location: "Madhesh Province", industry: "NGO / INGO", jobs_count: 4, description: "Humanitarian organization fighting poverty." },
+  { id: 5, name: "Welthungerhilfe", logo: "https://ui-avatars.com/api/?name=WH&background=0261a6&color=fff&size=64", location: "Lalitpur", industry: "NGO / INGO", jobs_count: 2, description: "German-based development and humanitarian aid organization." },
+  { id: 6, name: "InnovateTech", logo: "https://ui-avatars.com/api/?name=IT&background=0261a6&color=fff&size=64", location: "Pokhara", industry: "Information Technology", jobs_count: 6, description: "Innovative tech startup building next-gen applications." },
+  { id: 7, name: "GrowthLab", logo: "https://ui-avatars.com/api/?name=GL&background=0261a6&color=fff&size=64", location: "Kathmandu", industry: "Marketing / Sales", jobs_count: 3, description: "Growth marketing agency helping businesses scale." },
+  { id: 8, name: "DesignStudio Nepal", logo: "https://ui-avatars.com/api/?name=DS&background=0261a6&color=fff&size=64", location: "Remote", industry: "Information Technology", jobs_count: 2, description: "Creative design studio specializing in UX/UI." },
+  { id: 9, name: "MediCare Hospital", logo: "https://ui-avatars.com/api/?name=MC&background=0261a6&color=fff&size=64", location: "Kathmandu", industry: "Healthcare", jobs_count: 5, description: "Multi-specialty hospital with modern facilities." },
+  { id: 10, name: "JobsNepal.com", logo: "https://ui-avatars.com/api/?name=JN&background=0261a6&color=fff&size=64", location: "Kathmandu", industry: "Recruitment", jobs_count: 8, description: "Nepal's leading job portal connecting employers and job seekers." },
+];

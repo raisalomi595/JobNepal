@@ -24,30 +24,6 @@ const contactInfo = [
   },
 ];
 
-const team = [
-  {
-    name: "Rajesh Sharma",
-    role: "CEO & Founder",
-    email: "rajesh@jobsnepal.com",
-    phone: "+977 984 123 4567",
-    img: "https://ui-avatars.com/api/?name=Rajesh+Sharma&background=0261a6&color=fff&size=96&bold=true",
-  },
-  {
-    name: "Sita Gurung",
-    role: "HR & Recruitment Lead",
-    email: "sita@jobsnepal.com",
-    phone: "+977 984 234 5678",
-    img: "https://ui-avatars.com/api/?name=Sita+Gurung&background=fc8b07&color=fff&size=96&bold=true",
-  },
-  {
-    name: "Amit Shah",
-    role: "Client Relations",
-    email: "amit@jobsnepal.com",
-    phone: "+977 984 345 6789",
-    img: "https://ui-avatars.com/api/?name=Amit+Shah&background=0261a6&color=fff&size=96&bold=true",
-  },
-];
-
 export default function Contact() {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -170,26 +146,61 @@ export default function Contact() {
         </div>
       </section>
 
-      <section className="bg-white py-16 md:py-20">
+      <section className="bg-gradient-to-br from-gray-50 via-white to-gray-50 py-16 md:py-20">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Our Team</h2>
-            <p className="text-gray-500">Meet the people behind JobsNepal</p>
+          <div className="text-center mb-14">
+            <span className="inline-block text-xs font-bold text-[#0261a6] bg-blue-50 px-4 py-1.5 rounded-full mb-4 uppercase tracking-wider">Why JobNepal</span>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Trusted by Thousands</h2>
+            <p className="text-gray-500 max-w-xl mx-auto">We connect Nepal's top talent with leading employers across every industry.</p>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-4xl mx-auto">
-            {team.map((member) => (
-              <div key={member.name} className="group bg-gray-50 rounded-2xl p-6 md:p-8 text-center hover:bg-white hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                <div className="relative mx-auto mb-5 w-24 h-24">
-                  <img src={member.img} alt={member.name} className="w-24 h-24 rounded-full object-cover border-4 border-gray-100 group-hover:border-[#0261a6] transition-colors" />
-                </div>
-                <h3 className="font-bold text-gray-900 text-lg">{member.name}</h3>
-                <p className="text-sm text-gray-500 mb-4">{member.role}</p>
-                <div className="space-y-1.5 text-xs text-gray-400">
-                  <a href={`mailto:${member.email}`} className="block hover:text-[#0261a6] transition-colors">{member.email}</a>
-                  <a href={`tel:${member.phone}`} className="block hover:text-[#0261a6] transition-colors">{member.phone}</a>
-                </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto mb-14">
+            {[
+              { number: "10,000+", label: "Active Jobs", icon: "💼", desc: "Listed across all categories" },
+              { number: "50,000+", label: "Happy Candidates", icon: "🎯", desc: "Successfully placed in jobs" },
+              { number: "2,500+", label: "Partner Companies", icon: "🏢", desc: "Trust us for recruitment" },
+              { number: "12+", label: "Years of Service", icon: "📅", desc: "Serving Nepal since 2014" },
+            ].map((stat) => (
+              <div key={stat.label} className="bg-white rounded-2xl p-5 md:p-6 text-center border border-gray-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <div className="text-3xl mb-2">{stat.icon}</div>
+                <p className="text-2xl md:text-3xl font-bold text-[#0261a6]">{stat.number}</p>
+                <p className="text-sm font-semibold text-gray-900 mt-0.5">{stat.label}</p>
+                <p className="text-xs text-gray-400 mt-1 hidden md:block">{stat.desc}</p>
               </div>
             ))}
+          </div>
+
+          <div className="bg-white rounded-3xl shadow-lg p-8 md:p-12 max-w-5xl mx-auto border border-gray-100">
+            <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+              <div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">We're Here to Help You Succeed</h3>
+                <p className="text-gray-500 text-sm leading-relaxed mb-6">
+                  Whether you're a job seeker looking for your dream role or an employer searching for top talent, 
+                  our dedicated team works tirelessly to make the perfect match. With over a decade of experience 
+                  in Nepal's recruitment landscape, we understand what it takes to build great careers and strong teams.
+                </p>
+                <div className="space-y-3">
+                  {[
+                    { icon: "✓", text: "Free job search and application for candidates" },
+                    { icon: "✓", text: "Verified employers and genuine vacancies" },
+                    { icon: "✓", text: "Dedicated support throughout your journey" },
+                  ].map((item) => (
+                    <div key={item.text} className="flex items-center gap-3">
+                      <span className="w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xs font-bold shrink-0">{item.icon}</span>
+                      <span className="text-sm text-gray-600">{item.text}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="bg-gradient-to-br from-[#0261a6] to-[#015c9e] rounded-2xl p-8 text-white text-center">
+                <div className="text-5xl mb-4">🤝</div>
+                <p className="text-lg font-bold mb-2">Need Personalized Help?</p>
+                <p className="text-sm text-white/80 mb-6">Our support team typically responds within 2 hours during business hours.</p>
+                <a href="mailto:support@jobsnepal.com" className="inline-block bg-white text-[#0261a6] font-semibold px-6 py-3 rounded-xl hover:bg-gray-100 transition-colors text-sm">
+                  support@jobsnepal.com
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>

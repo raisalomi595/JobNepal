@@ -1,202 +1,205 @@
-import { Link, useSearchParams } from "react-router-dom";
 import { useState, useMemo } from "react";
-
-const allJobs = [
-  { id: 1, title: "Accountant (Construction Company)", company: "JobsNepal.com Direct Recruitment Service", location: "Kupondole, Lalitpur", type: "Full-time", category: "Accounting / Finance" },
-  { id: 2, title: "Crew Member (All-rounder) - Female", company: "JobsNepal.com Direct Recruitment Service", location: "Lalitpur", type: "Full-time", category: "Hospitality / Tourism" },
-  { id: 101, title: "Infrastructure Development Officer", company: "Human Practice Foundation", location: "Panchthar District", type: "Full-time", category: "Engineering" },
-  { id: 102, title: "Terms of Reference for Statutory Audit", company: "Welthungerhilfe", location: "Lalitpur", type: "Contract", category: "Accounting / Finance" },
-  { id: 103, title: "Senior Communication and Monitoring Officer", company: "HERD International", location: "Lalitpur", type: "Full-time", category: "NGO / INGO" },
-  { id: 104, title: "Laravel Developer - Proprietary CMS & ERP Integration", company: "Doublard Design Pvt. Ltd", location: "Kathmandu", type: "Full-time", category: "Information Technology" },
-  { id: 105, title: "Registration Notice", company: "Action Nepal", location: "Kathmandu", type: "Contract", category: "NGO / INGO" },
-  { id: 106, title: "Request for Proposals (RFP): Video Production Company", company: "Alliance Asia Nepal Private Ltd", location: "Lalitpur", type: "Contract", category: "Marketing / Advertising" },
-  { id: 107, title: "CALL FOR EXPRESSION OF INTEREST (EOI) For Project Partners", company: "Welthungerhilfe", location: "Lalitpur", type: "Contract", category: "NGO / INGO" },
-  { id: 108, title: "Executive Assistant to Country Representative", company: "WWF Nepal", location: "Kathmandu", type: "Full-time", category: "NGO / INGO" },
-  { id: 109, title: "Accountant (Construction Company)", company: "JobsNepal.com Direct Recruitment Service", location: "Kupondole, Lalitpur", type: "Full-time", category: "Accounting / Finance" },
-  { id: 110, title: "Textile & General Sourcing", company: "Albelo Multi Trading Pvt Ltd", location: "Lalitpur", type: "Full-time", category: "Sales / Business Development" },
-  { id: 111, title: "EoI for EPC services for Peanut Processing & Pilgrim Market Hub", company: "dZi Foundation", location: "Lalitpur", type: "Contract", category: "Engineering" },
-  { id: 112, title: "FARM HOUSE WORKER REQUIRED", company: "GAU FARKA AGRO FARM", location: "Pokhara", type: "Full-time", category: "Hospitality / Tourism" },
-  { id: 113, title: "Vacancy Announcement for Various Positions", company: "CARE Nepal", location: "Madhesh Province", type: "Full-time", category: "NGO / INGO" },
-  { id: 114, title: "Call for Proposal Publication Notice", company: "NGO Federation of Nepal", location: "Kathmandu", type: "Contract", category: "NGO / INGO" },
-  { id: 115, title: "UDL (Universal Design for Learning) Training Trainer/Consultant", company: "Forward Looking", location: "Rukum West", type: "Contract", category: "Education" },
-  { id: 116, title: "Sales Executive", company: "NIP HOLDINGS PVT LTD", location: "Kathmandu", type: "Full-time", category: "Sales / Business Development" },
-  { id: 201, title: "Senior Frontend Developer", company: "TechCorp Nepal", location: "Kathmandu", type: "Full-time", category: "Information Technology" },
-  { id: 202, title: "Data Analyst", company: "CloudMiner Pvt. Ltd.", location: "Lalitpur", type: "Full-time", category: "Information Technology" },
-  { id: 203, title: "UX/UI Designer", company: "DesignStudio Nepal", location: "Remote", type: "Contract", category: "Information Technology" },
-  { id: 204, title: "Python Backend Engineer", company: "InnovateTech", location: "Pokhara", type: "Full-time", category: "Information Technology" },
-  { id: 205, title: "Product Manager", company: "GrowthLab", location: "Kathmandu", type: "Full-time", category: "Information Technology" },
-  { id: 206, title: "DevOps Engineer", company: "CloudBase", location: "Lalitpur", type: "Full-time", category: "Information Technology" },
-];
-
-const jobCategories = [
-  "Information Technology", "Accounting / Finance", "Engineering",
-  "Healthcare", "Education", "Marketing / Advertising",
-  "Hospitality / Tourism", "NGO / INGO", "Banking / Financial",
-  "Sales / Business Development", "Human Resources", "Administration",
-];
+import { Link, useSearchParams } from "react-router-dom";
+import { allJobs } from "../data/jobs";
+import { CATEGORIES } from "../utils/constants";
+import { useAuth } from "../context/AuthContext";
+import { useApp } from "../context/AppContext";
+import LoginPromptModal from "../components/auth/LoginPromptModal";
+import Badge from "../components/ui/Badge";
+import Toast from "../components/Toast";
 
 export default function FindJob() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [form, setForm] = useState({
+  const { isAuthenticated } = useAuth();
+  const { applyToJob, toggleSaveJob, savedJobs } = useApp();
+  const [promptModal, setPromptModal] = useState(null);
+  const [promptAction, setPromptAction] = useState("");
+  const [toast, setToast] = useState(null);
+
+  const [filters, setFilters] = useState({
     keyword: searchParams.get("keyword") || "",
     location: searchParams.get("location") || "",
     category: searchParams.get("category") || "",
     type: searchParams.get("type") || "",
   });
-  const handleChange = (e) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const params = new URLSearchParams();
-    Object.entries(form).forEach(([key, val]) => {
-      if (val.trim()) params.set(key, val.trim());
-    });
-    setSearchParams(params);
+  const [visibleCount, setVisibleCount] = useState(12);
+
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters((prev) => ({ ...prev, [name]: value }));
+    setVisibleCount(12);
   };
 
   const filteredJobs = useMemo(() => {
     return allJobs.filter((job) => {
-      const kw = form.keyword.toLowerCase();
-      if (kw && !job.title.toLowerCase().includes(kw) && !job.company.toLowerCase().includes(kw)) return false;
-      if (form.location && !job.location.toLowerCase().includes(form.location.toLowerCase())) return false;
-      if (form.category && job.category !== form.category) return false;
-      if (form.type && job.type !== form.type) return false;
-      return true;
+      if (filters.keyword && !job.title.toLowerCase().includes(filters.keyword.toLowerCase()) &&
+          !job.company.toLowerCase().includes(filters.keyword.toLowerCase()))
+        return false;
+      if (filters.location && !job.location.toLowerCase().includes(filters.location.toLowerCase()))
+        return false;
+      if (filters.category && job.category !== filters.category) return false;
+      if (filters.type && job.type !== filters.type) return false;
+      return job.is_active;
     });
-  }, [form]);
+  }, [filters]);
+
+  const displayedJobs = filteredJobs.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredJobs.length;
+
+  const handleAction = (action, jobId) => {
+    if (!isAuthenticated) {
+      setPromptAction(action === "apply" ? "Apply for this Job" : "Save this Job");
+      setPromptModal(jobId);
+      return;
+    }
+    if (action === "apply") {
+      const result = applyToJob("current", jobId);
+      if (result.success) {
+        setToast({ message: "Application submitted!", type: "success" });
+      } else {
+        setToast({ message: result.error, type: "error" });
+      }
+    } else if (action === "save") {
+      toggleSaveJob("current", jobId);
+      setToast({ message: "Job saved!", type: "success" });
+    }
+  };
+
+  const savedJobIds = new Set(savedJobs.map((s) => s.jobId));
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-[#0261a6] py-12">
+      <div className="bg-[#0261a6] py-10">
         <div className="max-w-7xl mx-auto px-4">
-          <h1 className="text-3xl font-bold text-white text-center mb-8">Find Your Dream Job</h1>
-          <form onSubmit={handleSubmit} className="max-w-4xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-3">
-              <div className="flex-1">
-                <input
-                  type="text"
-                  name="keyword"
-                  value={form.keyword}
-                  onChange={handleChange}
-                  placeholder="Job title, keyword, company"
-                  className="w-full h-[50px] border-none rounded px-4 text-sm text-gray-700 focus:outline-none"
-                />
-              </div>
-              <div className="flex-1">
-                <input
-                  type="text"
-                  name="location"
-                  value={form.location}
-                  onChange={handleChange}
-                  placeholder="City, province or region"
-                  className="w-full h-[50px] border-none rounded px-4 text-sm text-gray-700 focus:outline-none"
-                />
-              </div>
-              <button
-                type="submit"
-                className="bg-[#fc8b07] hover:bg-[#e07d09] text-white font-semibold h-[50px] px-8 rounded transition-colors shrink-0"
-              >
-                Search Jobs
-              </button>
-            </div>
-          </form>
+          <h1 className="text-2xl md:text-3xl font-bold text-white mb-6">Find Your Dream Job</h1>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <input
+              name="keyword"
+              value={filters.keyword}
+              onChange={handleFilterChange}
+              placeholder="Job title, keyword, company"
+              className="w-full border border-white/30 rounded px-4 py-3 text-sm bg-white/10 text-white placeholder-white/60 focus:outline-none focus:bg-white/20"
+            />
+            <input
+              name="location"
+              value={filters.location}
+              onChange={handleFilterChange}
+              placeholder="Location"
+              className="w-full border border-white/30 rounded px-4 py-3 text-sm bg-white/10 text-white placeholder-white/60 focus:outline-none focus:bg-white/20"
+            />
+            <select
+              name="category"
+              value={filters.category}
+              onChange={handleFilterChange}
+              className="w-full border border-white/30 rounded px-4 py-3 text-sm bg-white/10 text-white focus:outline-none focus:bg-white/20"
+            >
+              <option value="" className="text-gray-700">All Categories</option>
+              {CATEGORIES.map((cat) => (
+                <option key={cat.id} value={cat.name} className="text-gray-700">{cat.name}</option>
+              ))}
+            </select>
+            <select
+              name="type"
+              value={filters.type}
+              onChange={handleFilterChange}
+              className="w-full border border-white/30 rounded px-4 py-3 text-sm bg-white/10 text-white focus:outline-none focus:bg-white/20"
+            >
+              <option value="" className="text-gray-700">All Types</option>
+              <option value="Full-time" className="text-gray-700">Full-time</option>
+              <option value="Part-time" className="text-gray-700">Part-time</option>
+              <option value="Contract" className="text-gray-700">Contract</option>
+              <option value="Internship" className="text-gray-700">Internship</option>
+              <option value="Remote" className="text-gray-700">Remote</option>
+            </select>
+          </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            {(form.keyword || form.location || form.category || form.type) ? (
-              <>
-                <h2 className="text-xl font-bold text-gray-900 mb-6">
-                  Search Results ({filteredJobs.length})
-                </h2>
-                {filteredJobs.length === 0 ? (
-                  <div className="bg-white border border-[#efefef] rounded p-8 text-center">
-                    <p className="text-gray-500 mb-2">No jobs found matching your criteria.</p>
-                    <p className="text-sm text-gray-400">Try adjusting your search terms.</p>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {filteredJobs.map((job) => (
-                      <Link
-                        key={job.id}
-                        to={`/job/${job.id}`}
-                        className="border border-[#efefef] rounded p-4 hover:shadow-md hover:border-gray-300 transition-all duration-200 bg-white block"
-                      >
-                        <div className="flex gap-3">
-                          <img
-                            src={`https://ui-avatars.com/api/?name=${encodeURIComponent(job.company)}&background=0261a6&color=fff&size=48&bold=true`}
-                            alt={job.company}
-                            className="w-12 h-12 rounded shrink-0"
-                          />
-                          <div className="min-w-0 flex-1">
-                            <p className="text-sm font-semibold text-[#0261a6] hover:underline line-clamp-2 leading-snug" title={job.title}>
-                              {job.title}
-                            </p>
-                            <p className="text-xs text-gray-600 font-medium mt-1 truncate">{job.company}</p>
-                            <p className="text-xs text-gray-400 mt-0.5">{job.location}</p>
-                            <span className="inline-block mt-1.5 text-[10px] font-semibold px-2 py-0.5 rounded bg-gray-100 text-gray-600">{job.type}</span>
-                          </div>
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <p className="text-sm text-gray-500 mb-4">{filteredJobs.length} jobs found</p>
+
+        {displayedJobs.length > 0 ? (
+          <div className="space-y-3">
+            {displayedJobs.map((job) => {
+              const isSaved = savedJobIds.has(job.id);
+              return (
+                <div key={job.id} className="bg-white border border-gray-200 rounded-lg p-4 md:p-5 hover:shadow-md transition-shadow">
+                  <div className="flex items-start gap-3">
+                    <img src={job.logo} alt={job.company} className="w-12 h-12 rounded shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          <Link to={`/job/${job.id}`} className="text-base font-semibold text-gray-900 hover:text-[#0261a6] block truncate">
+                            {job.title}
+                          </Link>
+                          <p className="text-sm text-gray-500">{job.company} • {job.location}</p>
                         </div>
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </>
-            ) : (
-              <>
-                <h2 className="text-xl font-bold text-gray-900 mb-6">Popular Job Categories</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {jobCategories.map((cat) => (
-                    <button
-                      key={cat}
-                      onClick={() => { setForm(prev => ({ ...prev, category: cat })); }}
-                      className="flex items-center gap-3 p-4 bg-white border border-[#efefef] rounded hover:shadow-md hover:border-[#0261a6] transition-all duration-200 group text-left w-full"
-                    >
-                      <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center group-hover:bg-[#0261a6] transition-colors">
-                        <svg className="w-5 h-5 text-gray-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
+                        <div className="flex items-center gap-2 shrink-0">
+                          <button
+                            onClick={() => handleAction("save", job.id)}
+                            className="text-lg hover:scale-110 transition-transform cursor-pointer"
+                            title={isSaved ? "Remove from saved" : "Save job"}
+                          >
+                            {isSaved ? "⭐" : "☆"}
+                          </button>
+                        </div>
                       </div>
-                      <span className="text-sm font-medium text-gray-700 group-hover:text-[#0261a6] transition-colors">{cat}</span>
-                    </button>
-                  ))}
+                      <div className="flex flex-wrap items-center gap-2 mt-2">
+                        <Badge variant="primary">{job.type}</Badge>
+                        <span className="text-xs text-gray-400">{job.salary}</span>
+                        <span className="text-xs text-gray-400">{job.category}</span>
+                      </div>
+                      <p className="text-sm text-gray-600 mt-2 line-clamp-2">{job.description}</p>
+                      {job.skills?.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mt-2">
+                          {job.skills.slice(0, 4).map((skill) => (
+                            <span key={skill} className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">{skill}</span>
+                          ))}
+                          {job.skills.length > 4 && <span className="text-xs text-gray-400">+{job.skills.length - 4} more</span>}
+                        </div>
+                      )}
+                      <div className="flex items-center gap-2 mt-3">
+                        <button
+                          onClick={() => handleAction("apply", job.id)}
+                          className="bg-[#fc8b07] hover:bg-[#e07d09] text-white text-xs font-semibold px-5 py-2 rounded transition-colors cursor-pointer"
+                        >
+                          {isAuthenticated ? "Apply Now" : "Login to Apply"}
+                        </button>
+                        <Link to={`/job/${job.id}`} className="text-xs text-[#0261a6] hover:underline font-medium">View Details</Link>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </>
-            )}
+              );
+            })}
           </div>
+        ) : (
+          <div className="text-center py-20">
+            <div className="text-5xl mb-4">🔍</div>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">No jobs found</h3>
+            <p className="text-sm text-gray-500">Try adjusting your search filters.</p>
+          </div>
+        )}
 
-          <div className="bg-white border border-[#efefef] rounded p-6 h-fit">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">Quick Tips</h3>
-            <ul className="space-y-3 text-sm text-gray-600">
-              <li className="flex gap-2">
-                <span className="text-[#0261a6] font-bold shrink-0">1.</span>
-                <span>Create a complete profile with your latest experience and skills.</span>
-              </li>
-              <li className="flex gap-2">
-                <span className="text-[#0261a6] font-bold shrink-0">2.</span>
-                <span>Upload an updated resume to increase your chances of getting hired.</span>
-              </li>
-              <li className="flex gap-2">
-                <span className="text-[#0261a6] font-bold shrink-0">3.</span>
-                <span>Set up job alerts to get notified about new matching positions.</span>
-              </li>
-              <li className="flex gap-2">
-                <span className="text-[#0261a6] font-bold shrink-0">4.</span>
-                <span>Apply to jobs directly through our platform for faster processing.</span>
-              </li>
-            </ul>
-            <div className="mt-6 pt-4 border-t border-[#efefef]">
-              <Link to="/signup" className="block text-center bg-[#fc8b07] hover:bg-[#e07d09] text-white font-semibold py-2.5 rounded transition-colors text-sm">
-                Create Free Account
-              </Link>
-            </div>
+        {hasMore && (
+          <div className="text-center mt-6">
+            <button
+              onClick={() => setVisibleCount((prev) => prev + 12)}
+              className="bg-white border border-gray-300 text-gray-700 px-8 py-2.5 rounded font-medium hover:bg-gray-50 transition-colors cursor-pointer"
+            >
+              Load More Jobs
+            </button>
           </div>
-        </div>
+        )}
       </div>
+
+      <LoginPromptModal
+        isOpen={!!promptModal}
+        onClose={() => { setPromptModal(null); setPromptAction(""); }}
+        action={promptAction}
+      />
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     </div>
   );
 }
