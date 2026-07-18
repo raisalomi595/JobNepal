@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import AuthModal from "./components/auth/AuthModal";
@@ -18,6 +19,7 @@ import Contact from "./pages/Contact";
 import Faq from "./pages/Faq";
 import DirectRecruitment from "./pages/DirectRecruitment";
 import WebBanner from "./pages/WebBanner";
+import NotFound from "./pages/NotFound";
 
 import DashboardHome from "./pages/dashboard/DashboardHome";
 import MyProfile from "./pages/dashboard/MyProfile";
@@ -49,6 +51,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white">
+      <ScrollToTop />
       <Routes>
         <Route element={<PublicLayout onOpenLogin={openLogin} onOpenSignup={openSignup} />}>
           <Route path="/" element={<Home />} />
@@ -63,6 +66,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/hire" element={<Hire />} />
           <Route path="/find-job" element={<FindJob />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
 
         <Route

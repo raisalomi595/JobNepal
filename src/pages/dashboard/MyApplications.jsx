@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useApp } from "../../context/AppContext";
 import { allJobs } from "../../data/jobs";
@@ -16,6 +17,7 @@ export default function MyApplications() {
   const [expandedId, setExpandedId] = useState(null);
   const [toast, setToast] = useState(null);
 
+  const navigate = useNavigate();
   const userApps = applications
     .filter((a) => a.userId === user?.id)
     .sort((a, b) => new Date(b.appliedAt) - new Date(a.appliedAt));
@@ -53,7 +55,7 @@ export default function MyApplications() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <Button size="sm" variant="ghost" onClick={() => setExpandedId(isExpanded ? null : app.id)}>
+                    <Button size="sm" variant="ghost" aria-label={isExpanded ? "Collapse details" : "Expand details"} onClick={() => setExpandedId(isExpanded ? null : app.id)}>
                       {isExpanded ? "▲" : "▼"}
                     </Button>
                     {app.status === "applied" && (
@@ -80,7 +82,7 @@ export default function MyApplications() {
                         </dl>
                         <div className="mt-4 space-y-2">
                           <Button size="sm" variant="outline" className="w-full">Download Receipt</Button>
-                          <Button size="sm" variant="ghost" className="w-full" onClick={() => window.open(`/job/${app.jobId}`, "_self")}>View Job</Button>
+                          <Button size="sm" variant="ghost" className="w-full" onClick={() => navigate(`/job/${app.jobId}`)}>View Job</Button>
                         </div>
                       </div>
                     </div>
@@ -95,7 +97,7 @@ export default function MyApplications() {
           icon="📝"
           title="No applications yet"
           description="Start applying to jobs and track them here."
-          action={<Button variant="primary" onClick={() => window.location.href = "/find-job"}>Browse Jobs</Button>}
+          action={<Button variant="primary" onClick={() => navigate("/find-job")}>Browse Jobs</Button>}
         />
       )}
 

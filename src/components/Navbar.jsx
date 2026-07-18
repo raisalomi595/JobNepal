@@ -2,33 +2,63 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+const searchDropdown = [
+  {
+    group: "By Type",
+    items: [
+      { label: "Search Job", to: "/find-job", icon: "🔍" },
+      { label: "Top Jobs", to: "/find-job?type=Full-time", icon: "⭐" },
+      { label: "Hot Jobs", to: "/find-job?sort=popular", icon: "🔥" },
+      { label: "Normal Jobs", to: "/find-job?featured=false", icon: "📄" },
+      { label: "Instant Jobs", to: "/find-job?sort=recent", icon: "⚡" },
+      { label: "Premium Jobs", to: "/find-job?featured=true", icon: "💎" },
+    ],
+  },
+  {
+    group: "By Category",
+    items: [
+      { label: "IT Jobs", to: "/find-job?category=Information+Technology", icon: "💻" },
+      { label: "Hospitality Jobs", to: "/find-job?category=Hospitality+%2F+Tourism", icon: "🏨" },
+      { label: "Admin/Management Jobs", to: "/find-job?category=Administration", icon: "📋" },
+      { label: "NGO/INGO Jobs", to: "/find-job?category=NGO+%2F+INGO", icon: "🤝" },
+    ],
+  },
+  {
+    group: "Special",
+    items: [
+      { label: "Tender Notice, EOI, Bids", to: "/find-job?type=Contract", icon: "📄" },
+    ],
+  },
+];
+
 const navLinks = [
   {
     label: "Search",
-    dropdown: [
-      { label: "Search Job", to: "/find-job" },
-      { label: "Top Jobs", to: "/find-job?type=Full-time" },
-      { label: "Hot Jobs", to: "/find-job" },
-      { label: "Normal Jobs", to: "/find-job" },
-      { label: "Instant Jobs", to: "/find-job" },
-      { label: "Premium Jobs", to: "/find-job" },
-      { label: "IT Jobs", to: "/find-job?category=Information+Technology" },
-      { label: "Hospitality Jobs", to: "/find-job?category=Hospitality+%2F+Tourism" },
-      { label: "Admin/Management Jobs", to: "/find-job?category=Administration" },
-      { label: "NGO/INGO Jobs", to: "/find-job?category=NGO+%2F+INGO" },
-      { label: "Tender Notice, EOI, Bids", to: "/find-job?type=Contract" },
-    ],
+    dropdown: searchDropdown,
   },
   { label: "About Us", to: "/about" },
   {
     label: "Services",
     dropdown: [
-      { label: "Direct Recruitment Service", to: "/direct-recruitment" },
-      { label: "Vacancy Announcement Service", to: "/hire" },
-      { label: "Web Banner Advertisement Service", to: "/web-banner" },
+      {
+        group: "",
+        items: [
+          { label: "Direct Recruitment Service", to: "/direct-recruitment", icon: "🎯" },
+          { label: "Vacancy Announcement Service", to: "/hire", icon: "📢" },
+          { label: "Web Banner Advertisement Service", to: "/web-banner", icon: "🖼️" },
+        ],
+      },
     ],
   },
-  { label: "Help", dropdown: [{ label: "FAQ", to: "/faq" }] },
+  {
+    label: "Help",
+    dropdown: [
+      {
+        group: "",
+        items: [{ label: "FAQ", to: "/faq", icon: "❓" }],
+      },
+    ],
+  },
   { label: "Blog", to: "/blog" },
   { label: "Contact Us", to: "/contact" },
 ];
@@ -83,16 +113,24 @@ export default function Navbar({ onOpenLogin, onOpenSignup }) {
                     <span className="text-xs">&#9662;</span>
                   </button>
                   {openDropdown === link.label && (
-                    <div className="absolute top-full left-0 bg-white text-gray-700 shadow-lg rounded-b-md py-2 min-w-[200px] z-50 text-sm">
-                      {link.dropdown.map((item) => (
-                        <Link
-                          key={item.label}
-                          to={item.to}
-                          onClick={() => setOpenDropdown(null)}
-                          className="block px-4 py-1.5 text-sm hover:bg-[#fc8b07] hover:text-white"
-                        >
-                          {item.label}
-                        </Link>
+                    <div className="absolute top-full left-0 bg-white text-gray-700 shadow-lg rounded-b-md py-2 min-w-[240px] z-50 text-sm">
+                      {link.dropdown.map((group) => (
+                        <div key={group.group}>
+                          {group.items.map((item) => (
+                            <Link
+                              key={item.label}
+                              to={item.to}
+                              onClick={() => setOpenDropdown(null)}
+                              className="flex items-center gap-2 px-4 py-1.5 text-sm hover:bg-[#fc8b07] hover:text-white transition-colors"
+                            >
+                              <span className="text-xs w-5 text-center shrink-0">{item.icon}</span>
+                              <span>{item.label}</span>
+                            </Link>
+                          ))}
+                          {group !== link.dropdown[link.dropdown.length - 1] && (
+                            <hr className="my-1 border-gray-100 mx-2" />
+                          )}
+                        </div>
                       ))}
                     </div>
                   )}
@@ -196,10 +234,15 @@ export default function Navbar({ onOpenLogin, onOpenSignup }) {
                 )}
                 {link.dropdown && openDropdown === `m-${link.label}` && (
                   <div className="ml-4 pb-2 space-y-1">
-                    {link.dropdown.map((item) => (
-                      <Link key={item.label} to={item.to} onClick={() => setMenuOpen(false)} className="block py-1 text-white/70 hover:text-[#fc8b07] px-3">
-                        {item.label}
-                      </Link>
+                    {link.dropdown.map((group) => (
+                      <div key={group.group}>
+                        {group.items.map((item) => (
+                          <Link key={item.label} to={item.to} onClick={() => setMenuOpen(false)} className="flex items-center gap-2 py-1 text-white/70 hover:text-[#fc8b07] px-3">
+                            <span className="text-xs">{item.icon}</span>
+                            <span>{item.label}</span>
+                          </Link>
+                        ))}
+                      </div>
                     ))}
                   </div>
                 )}

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { allJobs } from "../data/jobs";
 import { CATEGORIES } from "../utils/constants";
@@ -8,6 +8,17 @@ import LoginPromptModal from "../components/auth/LoginPromptModal";
 import Badge from "../components/ui/Badge";
 import Toast from "../components/Toast";
 
+const sortJobs = (jobs, sortBy) => {
+  if (!sortBy) return jobs;
+  const copy = [...jobs];
+  if (sortBy === "recent") {
+    copy.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  } else if (sortBy === "popular") {
+    copy.sort((a, b) => (b.apply_count || 0) - (a.apply_count || 0));
+  }
+  return copy;
+};
+
 export default function FindJob() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { isAuthenticated } = useAuth();
@@ -15,15 +26,30 @@ export default function FindJob() {
   const [promptModal, setPromptModal] = useState(null);
   const [promptAction, setPromptAction] = useState("");
   const [toast, setToast] = useState(null);
+  const [applyingId, setApplyingId] = useState(null);
 
   const [filters, setFilters] = useState({
     keyword: searchParams.get("keyword") || "",
     location: searchParams.get("location") || "",
     category: searchParams.get("category") || "",
     type: searchParams.get("type") || "",
+    featured: searchParams.get("featured") || "",
+    sort: searchParams.get("sort") || "",
   });
 
   const [visibleCount, setVisibleCount] = useState(12);
+
+  useEffect(() => {
+    setFilters({
+      keyword: searchParams.get("keyword") || "",
+      location: searchParams.get("location") || "",
+      category: searchParams.get("category") || "",
+      type: searchParams.get("type") || "",
+      featured: searchParams.get("featured") || "",
+      sort: searchParams.get("sort") || "",
+    });
+    setVisibleCount(12);
+  }, [searchParams]);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -32,7 +58,7 @@ export default function FindJob() {
   };
 
   const filteredJobs = useMemo(() => {
-    return allJobs.filter((job) => {
+    let jobs = allJobs.filter((job) => {
       if (filters.keyword && !job.title.toLowerCase().includes(filters.keyword.toLowerCase()) &&
           !job.company.toLowerCase().includes(filters.keyword.toLowerCase()))
         return false;
@@ -40,8 +66,12 @@ export default function FindJob() {
         return false;
       if (filters.category && job.category !== filters.category) return false;
       if (filters.type && job.type !== filters.type) return false;
+      if (filters.featured === "true" && !job.featured) return false;
+      if (filters.featured === "false" && job.featured) return false;
       return job.is_active;
     });
+    jobs = sortJobs(jobs, filters.sort);
+    return jobs;
   }, [filters]);
 
   const displayedJobs = filteredJobs.slice(0, visibleCount);
@@ -54,12 +84,16 @@ export default function FindJob() {
       return;
     }
     if (action === "apply") {
-      const result = applyToJob("current", jobId);
-      if (result.success) {
-        setToast({ message: "Application submitted!", type: "success" });
-      } else {
-        setToast({ message: result.error, type: "error" });
-      }
+      setApplyingId(jobId);
+      setTimeout(() => {
+        const result = applyToJob("current", jobId);
+        setApplyingId(null);
+        if (result.success) {
+          setToast({ message: "Application submitted!", type: "success" });
+        } else {
+          setToast({ message: result.error, type: "error" });
+        }
+      }, 300);
     } else if (action === "save") {
       toggleSaveJob("current", jobId);
       setToast({ message: "Job saved!", type: "success" });
@@ -162,9 +196,10 @@ export default function FindJob() {
                       <div className="flex items-center gap-2 mt-3">
                         <button
                           onClick={() => handleAction("apply", job.id)}
-                          className="bg-[#fc8b07] hover:bg-[#e07d09] text-white text-xs font-semibold px-5 py-2 rounded transition-colors cursor-pointer"
+                          disabled={applyingId === job.id}
+                          className="bg-[#fc8b07] hover:bg-[#e07d09] text-white text-xs font-semibold px-5 py-2 rounded transition-colors cursor-pointer disabled:opacity-50"
                         >
-                          {isAuthenticated ? "Apply Now" : "Login to Apply"}
+                          {applyingId === job.id ? "Applying..." : isAuthenticated ? "Apply Now" : "Login to Apply"}
                         </button>
                         <Link to={`/job/${job.id}`} className="text-xs text-[#0261a6] hover:underline font-medium">View Details</Link>
                       </div>

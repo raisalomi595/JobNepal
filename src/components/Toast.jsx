@@ -22,7 +22,7 @@ export default function Toast({ message, type = "success", onClose }) {
       >
         <span>{type === "success" ? "✓" : "✕"}</span>
         <span>{message}</span>
-        <button onClick={() => { setVisible(false); if (onClose) onClose(); }} className="ml-4 text-white/80 hover:text-white">
+        <button onClick={() => { setVisible(false); if (onClose) onClose(); }} aria-label="Close notification" className="ml-4 text-white/80 hover:text-white">
           ✕
         </button>
       </div>

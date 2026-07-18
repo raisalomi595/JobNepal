@@ -1,42 +1,62 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import { useState } from "react";
 import Toast from "../components/Toast";
+import { useAuth } from "../context/AuthContext";
+import { storage } from "../services/storage";
 
 export default function Hire() {
   const navigate = useNavigate();
+  const { signup, isAuthenticated } = useAuth();
   const [form, setForm] = useState({
     company: "", email: "", phone: "", password: "", confirmPassword: "",
     address: "", website: "", description: "",
   });
   const [toast, setToast] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  if (isAuthenticated) return <Navigate to="/dashboard" replace />;
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (form.password !== form.confirmPassword) {
       setToast({ message: "Passwords do not match!", type: "error" });
       return;
     }
-    const employers = JSON.parse(localStorage.getItem("employers") || "[]");
-    if (employers.find((e) => e.email === form.email)) {
-      setToast({ message: "Email already registered!", type: "error" });
+    if (form.password.length < 6) {
+      setToast({ message: "Password must be at least 6 characters!", type: "error" });
       return;
     }
-    employers.push({
-      company: form.company,
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 500));
+    const result = signup({
       email: form.email,
-      phone: form.phone,
       password: form.password,
-      address: form.address,
-      website: form.website,
-      description: form.description,
+      firstName: form.company,
+      lastName: "Employer",
+      phone: form.phone,
     });
-    localStorage.setItem("employers", JSON.stringify(employers));
-    setToast({ message: "Company registered successfully!", type: "success" });
-    setTimeout(() => navigate("/login"), 1500);
+    if (result.success) {
+      const employers = storage.get("jobnepal_employers", []);
+      employers.push({
+        company: form.company,
+        email: form.email,
+        phone: form.phone,
+        address: form.address,
+        website: form.website,
+        description: form.description,
+      });
+      storage.set("jobnepal_employers", employers);
+      setLoading(false);
+      setToast({ message: "Company registered successfully!", type: "success" });
+      setTimeout(() => navigate("/dashboard"), 1000);
+    } else {
+      setLoading(false);
+      setToast({ message: result.error, type: "error" });
+    }
   };
 
   return (
@@ -99,8 +119,8 @@ export default function Hire() {
             </div>
           </div>
 
-          <button type="submit" className="w-full bg-[#fc8b07] hover:bg-[#e07d09] text-white font-semibold py-3 rounded transition-colors text-lg">
-            Register Company
+          <button type="submit" disabled={loading} className="w-full bg-[#fc8b07] hover:bg-[#e07d09] text-white font-semibold py-3 rounded transition-colors text-lg disabled:opacity-50 cursor-pointer">
+            {loading ? "Registering..." : "Register Company"}
           </button>
 
           <p className="text-xs text-gray-400 text-center">

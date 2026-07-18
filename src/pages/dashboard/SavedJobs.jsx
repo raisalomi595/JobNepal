@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useApp } from "../../context/AppContext";
 import { allJobs } from "../../data/jobs";
@@ -12,6 +12,7 @@ import Toast from "../../components/Toast";
 export default function SavedJobs() {
   const { user } = useAuth();
   const { savedJobs, toggleSaveJob, applyToJob } = useApp();
+  const navigate = useNavigate();
   const [toast, setToast] = useState(null);
 
   const savedJobIds = useMemo(
@@ -74,7 +75,7 @@ export default function SavedJobs() {
           icon="⭐"
           title="No saved jobs"
           description="Save jobs you're interested in to review them later."
-          action={<Button variant="primary" onClick={() => window.location.href = "/find-job"}>Browse Jobs</Button>}
+          action={<Button variant="primary" onClick={() => navigate("/find-job")}>Browse Jobs</Button>}
         />
       )}
 

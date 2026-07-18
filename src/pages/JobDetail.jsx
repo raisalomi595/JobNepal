@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { allJobs } from "../data/jobs";
 import { useAuth } from "../context/AuthContext";
 import { useApp } from "../context/AppContext";
@@ -15,12 +15,15 @@ export default function JobDetail() {
   const { applyToJob, toggleSaveJob, toggleFollowCompany, savedJobs, trackRecentlyViewed } = useApp();
   const [promptModal, setPromptModal] = useState(null);
   const [toast, setToast] = useState(null);
+  const [isApplying, setIsApplying] = useState(false);
 
   const job = allJobs.find((j) => j.id === Number(id));
 
-  if (job && isAuthenticated) {
-    trackRecentlyViewed("current", job.id);
-  }
+  useEffect(() => {
+    if (job && isAuthenticated) {
+      trackRecentlyViewed("current", job.id);
+    }
+  }, [job?.id, isAuthenticated, trackRecentlyViewed]);
 
   const handleAction = (action) => {
     if (!isAuthenticated) {
@@ -28,12 +31,16 @@ export default function JobDetail() {
       return;
     }
     if (action === "apply") {
-      const result = applyToJob("current", job.id);
-      if (result.success) {
-        setToast({ message: "Application submitted successfully!", type: "success" });
-      } else {
-        setToast({ message: result.error, type: "error" });
-      }
+      setIsApplying(true);
+      setTimeout(() => {
+        const result = applyToJob("current", job.id);
+        setIsApplying(false);
+        if (result.success) {
+          setToast({ message: "Application submitted successfully!", type: "success" });
+        } else {
+          setToast({ message: result.error, type: "error" });
+        }
+      }, 300);
     } else if (action === "save") {
       toggleSaveJob("current", job.id);
       setToast({ message: "Job saved!", type: "success" });
@@ -126,9 +133,10 @@ export default function JobDetail() {
               <div className="mt-8 pt-6 border-t border-[#efefef] flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={() => handleAction("apply")}
-                  className="bg-[#fc8b07] hover:bg-[#e07d09] text-white font-semibold px-8 py-3 rounded transition-colors text-center cursor-pointer"
+                  disabled={isApplying}
+                  className="bg-[#fc8b07] hover:bg-[#e07d09] text-white font-semibold px-8 py-3 rounded transition-colors text-center cursor-pointer disabled:opacity-50"
                 >
-                  {isAuthenticated ? "Apply Now" : "Login to Apply"}
+                  {isApplying ? "Applying..." : isAuthenticated ? "Apply Now" : "Login to Apply"}
                 </button>
                 <button
                   onClick={() => handleAction("save")}
@@ -138,7 +146,7 @@ export default function JobDetail() {
                       : "border border-[#0261a6] text-[#0261a6] hover:bg-[#0261a6] hover:text-white"
                   }`}
                 >
-                  {isSaved ? "Saved" : isAuthenticated ? "Save Job" : "Save Job"}
+                  {isSaved ? "Saved" : "Save Job"}
                 </button>
                 {!isAuthenticated && (
                   <button
@@ -193,7 +201,7 @@ export default function JobDetail() {
               <h3 className="font-semibold text-gray-900 mb-3">Share This Job</h3>
               <div className="flex gap-2">
                 {["Facebook", "Twitter", "LinkedIn", "WhatsApp"].map((platform) => (
-                  <button key={platform} className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-xs text-gray-500 hover:bg-[#0261a6] hover:text-white transition-colors cursor-pointer">
+                  <button key={platform} aria-label={`Share on ${platform}`} className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-xs text-gray-500 hover:bg-[#0261a6] hover:text-white transition-colors cursor-pointer">
                     {platform[0]}
                   </button>
                 ))}

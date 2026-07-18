@@ -1,8 +1,10 @@
+import { useNavigate, Link } from "react-router-dom";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import { useAuth } from "../../context/AuthContext";
 
 export default function LoginPromptModal({ isOpen, onClose, action = "perform this action" }) {
+  const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
 
   const benefits = [
@@ -54,12 +56,12 @@ export default function LoginPromptModal({ isOpen, onClose, action = "perform th
           <Button variant="outline" className="flex-1" onClick={onClose}>
             Maybe Later
           </Button>
-          <Button variant="primary" className="flex-1" onClick={() => window.location.href = "/login"}>
+          <Button variant="primary" className="flex-1" onClick={() => navigate("/login")}>
             Sign In
           </Button>
         </div>
         <p className="text-xs text-gray-400 mt-4">
-          Don't have an account? <a href="/signup" className="text-[#0261a6] hover:underline font-medium">Create one</a>
+          Don't have an account? <Link to="/signup" className="text-[#0261a6] hover:underline font-medium">Create one</Link>
         </p>
       </div>
     </Modal>

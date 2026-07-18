@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useApp } from "../../context/AppContext";
 import Card from "../../components/ui/Card";
@@ -10,6 +11,7 @@ import { formatDateRelative } from "../../utils/helpers";
 export default function SavedSearches() {
   const { user } = useAuth();
   const { savedSearches, deleteSavedSearch } = useApp();
+  const navigate = useNavigate();
   const [toast, setToast] = useState(null);
 
   const searches = savedSearches.filter((s) => s.userId === user?.id);
@@ -39,7 +41,7 @@ export default function SavedSearches() {
                   <p className="text-xs text-gray-400 mt-0.5">Saved {formatDateRelative(search.createdAt)}</p>
                 </div>
                 <div className="flex gap-2">
-                  <Button size="sm" variant="outline" onClick={() => window.location.href = `/find-job?q=${search.query || ""}`}>Search</Button>
+                  <Button size="sm" variant="outline" onClick={() => navigate(`/find-job?keyword=${encodeURIComponent(search.query || "")}`)}>Search</Button>
                   <Button size="sm" variant="ghost" onClick={() => handleDelete(search.id)}>Delete</Button>
                 </div>
               </div>

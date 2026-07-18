@@ -35,6 +35,7 @@ export const CATEGORIES = [
   { id: 8, name: "NGO / INGO", slug: "ngo", icon: "🤝", count: 20 },
   { id: 9, name: "Banking / Insurance", slug: "banking", icon: "🏦", count: 12 },
   { id: 10, name: "Manufacturing", slug: "manufacturing", icon: "🏭", count: 10 },
+  { id: 11, name: "Administration", slug: "administration", icon: "📋", count: 8 },
 ];
 
 export const STORAGE_KEYS = {
