@@ -31,11 +31,31 @@ const values = [
   },
 ];
 
-const team = [
-  { name: "Rajesh Sharma", role: "CEO & Founder", img: "https://ui-avatars.com/api/?name=Rajesh+Sharma&background=0261a6&color=fff&size=128&bold=true" },
-  { name: "Anita Thapa", role: "Operations Director", img: "https://ui-avatars.com/api/?name=Anita+Thapa&background=fc8b07&color=fff&size=128&bold=true" },
-  { name: "Sagar Pandey", role: "Head of Technology", img: "https://ui-avatars.com/api/?name=Sagar+Pandey&background=0261a6&color=fff&size=128&bold=true" },
-  { name: "Priya Koirala", role: "Marketing Lead", img: "https://ui-avatars.com/api/?name=Priya+Koirala&background=fc8b07&color=fff&size=128&bold=true" },
+const testimonials = [
+  {
+    quote: "JobsNepal helped me land my dream role in just two weeks. The search filters made it easy to find exactly what I was looking for.",
+    name: "Sagar Acharya",
+    role: "Senior Developer at TechCorp",
+    img: "https://ui-avatars.com/api/?name=Sagar+Acharya&background=0261a6&color=fff&size=80&bold=true",
+  },
+  {
+    quote: "We've hired 12+ team members through JobsNepal. The quality of candidates is consistently excellent and the process is seamless.",
+    name: "Rita Sharma",
+    role: "HR Director, CloudBase Nepal",
+    img: "https://ui-avatars.com/api/?name=Rita+Sharma&background=fc8b07&color=fff&size=80&bold=true",
+  },
+  {
+    quote: "As a fresh graduate, I was nervous about job hunting. JobsNepal made it simple — from creating my profile to landing my first interview.",
+    name: "Aryan Thapa",
+    role: "Junior Analyst at Nepal Investment Bank",
+    img: "https://ui-avatars.com/api/?name=Aryan+Thapa&background=2d6a4f&color=fff&size=80&bold=true",
+  },
+  {
+    quote: "The reach and response time on JobsNepal is unmatched. We posted a vacancy and had qualified applicants within hours.",
+    name: "Meena Poudel",
+    role: "Operations Manager, dZi Foundation",
+    img: "https://ui-avatars.com/api/?name=Meena+Poudel&background=6b3fa0&color=fff&size=80&bold=true",
+  },
 ];
 
 export default function About() {
@@ -119,29 +139,31 @@ export default function About() {
         </div>
       </section>
 
-      <section className="max-w-7xl mx-auto px-4 py-16 md:py-20">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">Meet Our Team</h2>
-          <p className="text-gray-500">The passionate people behind JobsNepal</p>
-        </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {team.map((member) => (
-            <div key={member.name} className="group bg-white rounded-2xl shadow-md p-6 text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-              <div className="relative mx-auto mb-5 w-28 h-28">
-                <img src={member.img} alt={member.name} className="w-28 h-28 rounded-full object-cover border-4 border-gray-100 group-hover:border-[#0261a6] transition-colors" />
+      <section className="bg-white py-16 md:py-20">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">What People Say</h2>
+            <p className="text-gray-500 max-w-xl mx-auto">Real stories from job seekers and employers who trust JobsNepal</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+            {testimonials.map((t) => (
+              <div key={t.name} className="bg-gray-50 rounded-2xl p-6 md:p-8 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <div className="flex items-start gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <svg key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                  ))}
+                </div>
+                <p className="text-gray-700 leading-relaxed mb-6 italic">"{t.quote}"</p>
+                <div className="flex items-center gap-3">
+                  <img src={t.img} alt={t.name} className="w-10 h-10 rounded-full" />
+                  <div>
+                    <p className="font-semibold text-gray-900 text-sm">{t.name}</p>
+                    <p className="text-xs text-gray-500">{t.role}</p>
+                  </div>
+                </div>
               </div>
-              <h3 className="font-bold text-gray-900 text-lg">{member.name}</h3>
-              <p className="text-sm text-gray-500">{member.role}</p>
-              <div className="mt-4 flex justify-center gap-2">
-                <span className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-[#0261a6] hover:text-white transition-colors cursor-pointer">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
-                </span>
-                <span className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-[#0261a6] hover:text-white transition-colors cursor-pointer">
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" /></svg>
-                </span>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
