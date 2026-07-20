@@ -72,7 +72,6 @@ export default function SavedJobs() {
         </div>
       ) : (
         <EmptyState
-          icon="⭐"
           title="No saved jobs"
           description="Save jobs you're interested in to review them later."
           action={<Button variant="primary" onClick={() => navigate("/find-job")}>Browse Jobs</Button>}

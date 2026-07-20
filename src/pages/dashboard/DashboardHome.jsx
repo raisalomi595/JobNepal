@@ -47,7 +47,7 @@ export default function DashboardHome() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">
-            Welcome back, {user?.firstName}! 👋
+            Welcome back, {user?.firstName}!
           </h1>
           <p className="text-sm text-gray-500 mt-1">
             Here's what's happening with your job search today.
@@ -65,32 +65,29 @@ export default function DashboardHome() {
           </Button>
         </div>
         <ProgressBar value={profile.completionPct || 0} />
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4 text-xs text-gray-600">
-          <div className="flex items-center gap-1.5">
-            <span className={profile.headline ? "text-green-500" : "text-gray-300"}>✓</span> Headline
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4 text-xs text-gray-600">
+            {["headline", "skills", "education", "experience", "resume_url", "languages", "certificates", "projects"].map((field) => {
+              const done = field === "headline" ? profile.headline
+                : field === "resume_url" ? profile.resume_url
+                : field === "skills" ? profile.skills?.length > 0
+                : field === "education" ? profile.education?.length > 0
+                : field === "experience" ? profile.experience?.length > 0
+                : field === "languages" ? profile.languages?.length > 0
+                : field === "certificates" ? profile.certificates?.length > 0
+                : field === "projects" ? profile.projects?.length > 0
+                : false;
+              return (
+                <div key={field} className="flex items-center gap-1.5">
+                  <span className={done ? "text-green-500" : "text-gray-300"}>
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </span>
+                  {field === "resume_url" ? "Resume" : field.charAt(0).toUpperCase() + field.slice(1)}
+                </div>
+              );
+            })}
           </div>
-          <div className="flex items-center gap-1.5">
-            <span className={profile.skills?.length > 0 ? "text-green-500" : "text-gray-300"}>✓</span> Skills
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className={profile.education?.length > 0 ? "text-green-500" : "text-gray-300"}>✓</span> Education
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className={profile.experience?.length > 0 ? "text-green-500" : "text-gray-300"}>✓</span> Experience
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className={profile.resume_url ? "text-green-500" : "text-gray-300"}>✓</span> Resume
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className={profile.languages?.length > 0 ? "text-green-500" : "text-gray-300"}>✓</span> Languages
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className={profile.certificates?.length > 0 ? "text-green-500" : "text-gray-300"}>✓</span> Certificates
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className={profile.projects?.length > 0 ? "text-green-500" : "text-gray-300"}>✓</span> Projects
-          </div>
-        </div>
       </Card>
 
       <div>
@@ -110,7 +107,7 @@ export default function DashboardHome() {
             ))}
           </div>
         ) : (
-          <EmptyState icon="🔍" title="No recommendations yet" description="Start applying to jobs to get personalized recommendations." />
+          <EmptyState title="No recommendations yet" description="Start applying to jobs to get personalized recommendations." />
         )}
       </div>
 
@@ -199,7 +196,9 @@ export default function DashboardHome() {
           </div>
           {profile.resume_url ? (
             <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
-              <span className="text-2xl">📄</span>
+              <svg className="w-8 h-8 text-green-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
               <div className="min-w-0">
                 <p className="text-sm font-medium text-gray-900 truncate">{profile.resume_name || "Resume"}</p>
                 <p className="text-xs text-green-600">Uploaded</p>
@@ -219,7 +218,9 @@ export default function DashboardHome() {
               const job = allJobs.find((j) => j.id === app.jobId);
               return (
                 <div key={app.id} className="flex items-center gap-3 py-2 border-b border-gray-100 last:border-0">
-                  <span className="text-xl">🎯</span>
+                  <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0" />
+                  </svg>
                   <div className="min-w-0">
                     <p className="text-sm font-medium text-gray-900">{job?.title}</p>
                     <p className="text-xs text-gray-500">{job?.company} • Schedule TBD</p>

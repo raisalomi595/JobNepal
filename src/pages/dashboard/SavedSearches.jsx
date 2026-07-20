@@ -49,7 +49,7 @@ export default function SavedSearches() {
           ))}
         </div>
       ) : (
-        <EmptyState icon="🔍" title="No saved searches" description="Save your job searches to quickly access them later." />
+        <EmptyState title="No saved searches" description="Save your job searches to quickly access them later." />
       )}
 
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}

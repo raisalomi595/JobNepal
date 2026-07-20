@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
 
 const items = [
-  { to: "/dashboard", label: "Home", icon: "🏠" },
-  { to: "/find-job", label: "Search", icon: "🔍" },
-  { to: "/dashboard/saved-jobs", label: "Saved", icon: "⭐" },
-  { to: "/dashboard/messages", label: "Messages", icon: "💬" },
-  { to: "/dashboard/profile", label: "Profile", icon: "👤" },
+  { to: "/dashboard", label: "Home" },
+  { to: "/find-job", label: "Search" },
+  { to: "/dashboard/saved-jobs", label: "Saved" },
+  { to: "/dashboard/messages", label: "Messages" },
+  { to: "/dashboard/profile", label: "Profile" },
 ];
 
 export default function MobileBottomNav() {
@@ -23,7 +23,6 @@ export default function MobileBottomNav() {
               }`
             }
           >
-            <span className="text-lg">{item.icon}</span>
             <span>{item.label}</span>
           </NavLink>
         ))}

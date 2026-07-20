@@ -25,17 +25,17 @@ export const NOTIFICATION_TYPES = {
 };
 
 export const CATEGORIES = [
-  { id: 1, name: "Information Technology", slug: "it", icon: "💻", count: 45 },
-  { id: 2, name: "Accounting / Finance", slug: "accounting", icon: "💰", count: 28 },
-  { id: 3, name: "Engineering", slug: "engineering", icon: "⚙️", count: 32 },
-  { id: 4, name: "Healthcare", slug: "healthcare", icon: "🏥", count: 18 },
-  { id: 5, name: "Education / Teaching", slug: "education", icon: "📚", count: 22 },
-  { id: 6, name: "Marketing / Sales", slug: "marketing", icon: "📢", count: 35 },
-  { id: 7, name: "Hospitality / Tourism", slug: "hospitality", icon: "🍽️", count: 15 },
-  { id: 8, name: "NGO / INGO", slug: "ngo", icon: "🤝", count: 20 },
-  { id: 9, name: "Banking / Insurance", slug: "banking", icon: "🏦", count: 12 },
-  { id: 10, name: "Manufacturing", slug: "manufacturing", icon: "🏭", count: 10 },
-  { id: 11, name: "Administration", slug: "administration", icon: "📋", count: 8 },
+  { id: 1, name: "Information Technology", slug: "it" },
+  { id: 2, name: "Accounting / Finance", slug: "accounting" },
+  { id: 3, name: "Engineering", slug: "engineering" },
+  { id: 4, name: "Healthcare", slug: "healthcare" },
+  { id: 5, name: "Education / Teaching", slug: "education" },
+  { id: 6, name: "Marketing / Sales", slug: "marketing" },
+  { id: 7, name: "Hospitality / Tourism", slug: "hospitality" },
+  { id: 8, name: "NGO / INGO", slug: "ngo" },
+  { id: 9, name: "Banking / Insurance", slug: "banking" },
+  { id: 10, name: "Manufacturing", slug: "manufacturing" },
+  { id: 11, name: "Administration", slug: "administration" },
 ];
 
 export const STORAGE_KEYS = {

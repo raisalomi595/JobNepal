@@ -2,16 +2,16 @@ import { NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 const links = [
-  { to: "/dashboard", label: "Dashboard", icon: "📊" },
-  { to: "/dashboard/profile", label: "My Profile", icon: "👤" },
-  { to: "/dashboard/applications", label: "Applications", icon: "📝" },
-  { to: "/dashboard/saved-jobs", label: "Saved Jobs", icon: "⭐" },
-  { to: "/dashboard/saved-companies", label: "Saved Companies", icon: "🏢" },
-  { to: "/dashboard/saved-searches", label: "Saved Searches", icon: "🔍" },
-  { to: "/dashboard/messages", label: "Messages", icon: "💬" },
-  { to: "/dashboard/notifications", label: "Notifications", icon: "🔔" },
-  { to: "/dashboard/settings", label: "Settings", icon: "⚙️" },
-  { to: "/dashboard/premium", label: "Upgrade to Premium", icon: "⭐", premium: true },
+  { to: "/dashboard", label: "Dashboard" },
+  { to: "/dashboard/profile", label: "My Profile" },
+  { to: "/dashboard/applications", label: "Applications" },
+  { to: "/dashboard/saved-jobs", label: "Saved Jobs" },
+  { to: "/dashboard/saved-companies", label: "Saved Companies" },
+  { to: "/dashboard/saved-searches", label: "Saved Searches" },
+  { to: "/dashboard/messages", label: "Messages" },
+  { to: "/dashboard/notifications", label: "Notifications" },
+  { to: "/dashboard/settings", label: "Settings" },
+  { to: "/dashboard/premium", label: "Upgrade to Premium", premium: true },
 ];
 
 export default function DashboardSidebar({ isOpen, onClose }) {
@@ -64,7 +64,6 @@ export default function DashboardSidebar({ isOpen, onClose }) {
                 }`
               }
             >
-              <span>{link.icon}</span>
               <span>{link.label}</span>
               {link.premium && (
                 <span className="ml-auto text-[10px] bg-yellow-100 text-yellow-700 px-1.5 py-0.5 rounded-full font-bold">

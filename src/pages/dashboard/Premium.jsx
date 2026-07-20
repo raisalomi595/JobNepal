@@ -76,7 +76,9 @@ export default function Premium() {
             <ul className="space-y-2.5 mb-6">
               {plan.features.map((f, i) => (
                 <li key={i} className="flex items-start gap-2 text-sm">
-                  <span className="text-green-500 mt-0.5 shrink-0">✓</span>
+                  <svg className="w-4 h-4 text-green-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                  </svg>
                   <span className="text-gray-600">{f}</span>
                 </li>
               ))}

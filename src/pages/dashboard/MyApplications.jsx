@@ -94,7 +94,6 @@ export default function MyApplications() {
         </div>
       ) : (
         <EmptyState
-          icon="📝"
           title="No applications yet"
           description="Start applying to jobs and track them here."
           action={<Button variant="primary" onClick={() => navigate("/find-job")}>Browse Jobs</Button>}

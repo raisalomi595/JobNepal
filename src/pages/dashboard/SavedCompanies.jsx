@@ -48,7 +48,7 @@ export default function SavedCompanies() {
           ))}
         </div>
       ) : (
-        <EmptyState icon="🏢" title="No companies followed" description="Follow companies to get updates on their job postings." />
+        <EmptyState title="No companies followed" description="Follow companies to get updates on their job postings." />
       )}
 
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}

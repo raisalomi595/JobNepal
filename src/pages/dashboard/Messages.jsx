@@ -171,7 +171,7 @@ export default function Messages() {
               </>
             ) : (
               <div className="flex items-center justify-center h-full min-h-[400px]">
-                <EmptyState icon="💬" title="Select a conversation" description="Choose a conversation from the left or start a new one." />
+                <EmptyState title="Select a conversation" description="Choose a conversation from the left or start a new one." />
               </div>
             )}
           </Card>

@@ -6,27 +6,27 @@ const searchDropdown = [
   {
     group: "By Type",
     items: [
-      { label: "Search Job", to: "/find-job", icon: "🔍" },
-      { label: "Top Jobs", to: "/find-job?type=Full-time", icon: "⭐" },
-      { label: "Hot Jobs", to: "/find-job?sort=popular", icon: "🔥" },
-      { label: "Normal Jobs", to: "/find-job?featured=false", icon: "📄" },
-      { label: "Instant Jobs", to: "/find-job?sort=recent", icon: "⚡" },
-      { label: "Premium Jobs", to: "/find-job?featured=true", icon: "💎" },
+      { label: "Search Job", to: "/find-job" },
+      { label: "Top Jobs", to: "/find-job?type=Full-time" },
+      { label: "Hot Jobs", to: "/find-job?sort=popular" },
+      { label: "Normal Jobs", to: "/find-job?featured=false" },
+      { label: "Instant Jobs", to: "/find-job?sort=recent" },
+      { label: "Premium Jobs", to: "/find-job?featured=true" },
     ],
   },
   {
     group: "By Category",
     items: [
-      { label: "IT Jobs", to: "/find-job?category=Information+Technology", icon: "💻" },
-      { label: "Hospitality Jobs", to: "/find-job?category=Hospitality+%2F+Tourism", icon: "🏨" },
-      { label: "Admin/Management Jobs", to: "/find-job?category=Administration", icon: "📋" },
-      { label: "NGO/INGO Jobs", to: "/find-job?category=NGO+%2F+INGO", icon: "🤝" },
+      { label: "IT Jobs", to: "/find-job?category=Information+Technology" },
+      { label: "Hospitality Jobs", to: "/find-job?category=Hospitality+%2F+Tourism" },
+      { label: "Admin/Management Jobs", to: "/find-job?category=Administration" },
+      { label: "NGO/INGO Jobs", to: "/find-job?category=NGO+%2F+INGO" },
     ],
   },
   {
     group: "Special",
     items: [
-      { label: "Tender Notice, EOI, Bids", to: "/find-job?type=Contract", icon: "📄" },
+      { label: "Tender Notice, EOI, Bids", to: "/find-job?type=Contract" },
     ],
   },
 ];
@@ -43,9 +43,9 @@ const navLinks = [
       {
         group: "",
         items: [
-          { label: "Direct Recruitment Service", to: "/direct-recruitment", icon: "🎯" },
-          { label: "Vacancy Announcement Service", to: "/hire", icon: "📢" },
-          { label: "Web Banner Advertisement Service", to: "/web-banner", icon: "🖼️" },
+          { label: "Direct Recruitment Service", to: "/direct-recruitment" },
+          { label: "Vacancy Announcement Service", to: "/hire" },
+          { label: "Web Banner Advertisement Service", to: "/web-banner" },
         ],
       },
     ],
@@ -55,7 +55,7 @@ const navLinks = [
     dropdown: [
       {
         group: "",
-        items: [{ label: "FAQ", to: "/faq", icon: "❓" }],
+        items: [{ label: "FAQ", to: "/faq" }],
       },
     ],
   },
@@ -123,8 +123,7 @@ export default function Navbar({ onOpenLogin, onOpenSignup }) {
                               onClick={() => setOpenDropdown(null)}
                               className="flex items-center gap-2 px-4 py-1.5 text-sm hover:bg-[#fc8b07] hover:text-white transition-colors"
                             >
-                              <span className="text-xs w-5 text-center shrink-0">{item.icon}</span>
-                              <span>{item.label}</span>
+                                <span>{item.label}</span>
                             </Link>
                           ))}
                           {group !== link.dropdown[link.dropdown.length - 1] && (
@@ -238,7 +237,6 @@ export default function Navbar({ onOpenLogin, onOpenSignup }) {
                       <div key={group.group}>
                         {group.items.map((item) => (
                           <Link key={item.label} to={item.to} onClick={() => setMenuOpen(false)} className="flex items-center gap-2 py-1 text-white/70 hover:text-[#fc8b07] px-3">
-                            <span className="text-xs">{item.icon}</span>
                             <span>{item.label}</span>
                           </Link>
                         ))}

@@ -8,12 +8,12 @@ export default function LoginPromptModal({ isOpen, onClose, action = "perform th
   const { isAuthenticated } = useAuth();
 
   const benefits = [
-    { icon: "📝", text: "Apply to jobs with one click" },
-    { icon: "⭐", text: "Save jobs and track them" },
-    { icon: "📊", text: "Track all your applications" },
-    { icon: "🔔", text: "Get notified about new jobs" },
-    { icon: "📄", text: "Upload resume & get discovered" },
-    { icon: "📈", text: "AI-powered job recommendations" },
+    { text: "Apply to jobs with one click" },
+    { text: "Save jobs and track them" },
+    { text: "Track all your applications" },
+    { text: "Get notified about new jobs" },
+    { text: "Upload resume & get discovered" },
+    { text: "AI-powered job recommendations" },
   ];
 
   if (isAuthenticated) return null;
@@ -22,7 +22,9 @@ export default function LoginPromptModal({ isOpen, onClose, action = "perform th
     <Modal isOpen={isOpen} onClose={onClose} title="" size="sm">
       <div className="text-center">
         <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
-          <span className="text-3xl">🔒</span>
+          <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          </svg>
         </div>
         <h3 className="text-xl font-bold text-gray-900 mb-2">Login to {action}</h3>
         <p className="text-sm text-gray-500 mb-6">Create a free account to unlock all features</p>
@@ -30,7 +32,7 @@ export default function LoginPromptModal({ isOpen, onClose, action = "perform th
         <div className="grid grid-cols-2 gap-3 mb-6 text-left">
           {benefits.map((b, i) => (
             <div key={i} className="flex items-start gap-2">
-              <span className="text-base shrink-0">{b.icon}</span>
+              <span className="w-1.5 h-1.5 bg-[#0261a6] rounded-full mt-1.5 shrink-0" />
               <span className="text-xs text-gray-600">{b.text}</span>
             </div>
           ))}
